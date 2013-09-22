@@ -1,11 +1,10 @@
 <h1>Listing pads</h1>
 
-<table>
+<table class="table">
   <thead>
     <tr>
-      <th>Name</th>
-      <th>Group</th>
-      <th>Creator</th>
+      <th><%= sortable 'name', 'Name' %></th>
+      <th><%= sortable 'users.name', 'Creator' %></th>
       <th></th>
       <th></th>
       <th></th>
@@ -19,7 +18,6 @@
           <%= pad.readonly_id if pad.is_public_readonly && current_user.nil? %>
           <%= pad.name if !pad.is_public_readonly || !current_user.nil?  %>
         </td>
-        <td><%= pad.group.name %></td>
         <td><%= pad.creator.name rescue 'unknown' %></td>
         <td>
           <%= link_to 'Show', '/p/'+pad.group.name+'/'+pad.name if @group.name != 'ungrouped' && !current_user.nil? %>

@@ -1,11 +1,10 @@
 <h1>Listing groups</h1>
 
-<table>
+<table class="table">
   <thead>
     <tr>
-      <th>Group</th>
-      <th>Name</th>
-      <th>Creator</th>
+      <th><%= sortable 'name', 'Name' %></th>
+      <th><%= sortable 'users.name', 'Creator' %></th>
       <th></th>
       <th></th>
       <th></th>
@@ -15,9 +14,8 @@
   <tbody>
     <% @groups.each do |group| %>
       <tr>
-        <td><%= group.group_id %></td>
         <td><%= group.name %></td>
-        <td><%= group.creator_id %></td>
+        <td><%= group.creator.name rescue '' %></td>
         <td><%= link_to 'Show', group %></td>
         <td><%= link_to 'Edit', edit_group_path(group) %></td>
         <td><%= link_to 'Destroy', group, method: :delete, data: { confirm: 'Are you sure?' } %></td>
