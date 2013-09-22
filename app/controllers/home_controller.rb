@@ -3,7 +3,7 @@ class HomeController < ApplicationController
   skip_authorization_check
 
   def index
-    @group = Group.find_by_name('ungrouped')
+    @group = Group.find_or_create_by(name: 'ungrouped')
     @pad = Pad.new
   end
 end

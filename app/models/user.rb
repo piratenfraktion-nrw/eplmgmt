@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   before_validation :get_ldap_email
+  has_many :pads, :class_name => "Pad", :foreign_key => "creator_id"
 
   rolify
   # Include default devise modules. Others available are:

@@ -19,9 +19,10 @@ class PadsController < ApplicationController
       @group = Group.find_by_name('ungrouped')
     end
 
-    @pads = Pad.joins(:creator).where("group_id = ?", @group.id)
+    @pads = Pad.joins(:group, :creator).order(sort_column + ' ' + sort_direction)
+    @pads = @pads.where("pads.group_id = ?", @group.id)
     @pads = @pads.where(is_public: true) if current_user.nil?
-    @pads = @pads.order(sort_column + ' ' + sort_direction).all
+    @pads = @pads.all
   end
 
   # GET /p/1

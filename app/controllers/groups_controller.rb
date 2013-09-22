@@ -8,7 +8,7 @@ class GroupsController < ApplicationController
   # GET /groups
   # GET /groups.json
   def index
-    @groups = Group.joins(:creator).order(sort_column + ' ' + sort_direction)
+    @groups = Group.includes(:creator).order(sort_column + ' ' + sort_direction)
   end
 
   # GET /groups/1
