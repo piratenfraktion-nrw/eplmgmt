@@ -37,6 +37,7 @@ class Pad < ActiveRecord::Base
     ep_pad = self.group.ep_group.pad(self.name, text: text_was)
     ep_pad.public = self.is_public
     ep_pad.password = self.password
+    self.readonly_id = ep_pad.read_only_id
     self.pad_id = ep_pad.id
   end
 

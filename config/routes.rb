@@ -7,7 +7,7 @@ Eplmgmt::Application.routes.draw do
 
   resources :group_users, only: [:edit, :update, :destroy]
   resources :pads, only: [:edit, :update, :destroy]
-  resources :pads, path: :p, only: [:show], format: false
+  resources :pads, path: :p, only: [:show], format: false, id: /[A-Za-z0-9\.]+/
 
   root :to => "home#index"
   devise_for :users, :controllers => {:registrations => "registrations", :sessions => "sessions"}

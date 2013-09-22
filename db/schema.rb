@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130921221753) do
+ActiveRecord::Schema.define(version: 20130922174309) do
 
   create_table "group_users", force: true do |t|
     t.integer  "group_id"
@@ -43,6 +43,8 @@ ActiveRecord::Schema.define(version: 20130921221753) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "is_public"
+    t.boolean  "is_public_readonly"
+    t.string   "readonly_id"
   end
 
   add_index "pads", ["group_id"], name: "index_pads_on_group_id"

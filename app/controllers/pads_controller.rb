@@ -1,7 +1,7 @@
 class PadsController < ApplicationController
   include Etherpad
   layout 'pad', only: [:show]
-  before_filter :authenticate_user!, except: [:show]
+  before_filter :authenticate_user!, except: [:show, :index]
   before_action :set_pad, only: [:show, :edit, :update, :destroy]
   load_and_authorize_resource
 
@@ -13,7 +13,13 @@ class PadsController < ApplicationController
     else
     @group = Group.find_or_create_by_name('ungrouped')
     end
+
+    if current_user.nil?
+      @group = Group.find_by_name('ungrouped')
+    end
+
     @pads = @group.pads
+    @pads = @group.pads.where(is_public: true) if current_user.nil?
   end
 
   # GET /p/1
@@ -100,7 +106,8 @@ class PadsController < ApplicationController
       if params[:id].present?
         @pad = Pad.find(params[:id]) rescue nil
         @pad = Pad.find_by_name(params[:id]) if @pad.nil?
-        @pad = Pad.find_or_create_by_name_and_creator_id(params[:id], current_user.id) if @pad.nil?
+        @pad = Pad.find_or_create_by_name_and_creator_id(params[:id], current_user.id) if @pad.nil? && !current_user.nil?
+        @pad = Pad.find_by_readonly_id(params[:id]) if @pad.nil? && current_user.nil?
       elsif params[:pad].present? && params[:group].present?
         group = Group.find_by_name(params[:group])
         @pad = group.pads.find_by_name(params[:pad]) rescue nil
@@ -110,6 +117,6 @@ class PadsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def pad_params
-      params.require(:pad).permit(:name, :password, :is_public)
+      params.require(:pad).permit(:name, :password, :is_public, :is_public_readonly)
     end
 end

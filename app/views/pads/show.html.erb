@@ -6,4 +6,8 @@
   </div>
 <% end %>
 
+<% if current_user.nil? && @pad.is_public_readonly %>
+<iframe frameborder="0" src="/epl/p/<%= @pad.readonly_id %>"></iframe>
+<% else %>
 <iframe frameborder="0" src="/epl/p/<%= @pad.pad_id %>"></iframe>
+<% end %>
