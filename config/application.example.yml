@@ -7,7 +7,7 @@
 # makes 'Your_Gmail_Username' available as ENV["GMAIL_USERNAME"]
 # Add application configuration variables here, as shown below.
 #
-ADMIN_NAME: First User
-ADMIN_EMAIL: user@example.com
-ADMIN_PASSWORD: changeme
-ROLES: [admin, user, VIP]
+EPL_API_URL: http://localhost:9001
+EPL_API_VERSION: 1.2.7
+EPL_API_KEY: iMMQ7NJEz1HoFudsD5VCumLOEpdyNxho
+

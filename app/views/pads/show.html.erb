@@ -1,0 +1,9 @@
+<% if user_signed_in? && current_user == @pad.creator %>
+  <div class="snap-drawers">
+    <div id="pad-menu" class="snap-drawer snap-drawer-left">
+      <%= render partial: 'form' %>
+    </div>
+  </div>
+<% end %>
+
+<iframe frameborder="0" src="/epl/p/<%= @pad.pad_id %>"></iframe>

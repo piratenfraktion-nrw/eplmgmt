@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  skip_authorization_check
   before_filter :authenticate_user!
 
   def index

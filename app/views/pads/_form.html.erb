@@ -1,0 +1,13 @@
+<%= simple_form_for([@group, @pad]) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :name, hint: 'History will be lost on changing this' %>
+    <%= f.input :password, input_html: { value: @pad.password } %>
+    <%= f.input :is_public %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

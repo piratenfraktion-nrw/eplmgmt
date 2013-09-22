@@ -1,4 +1,19 @@
 <h3>Home</h3>
-<% @users.each do |user| %>
-  <p>User: <%=link_to user.name, user %></p>
-<% end %>
+<div class="row">
+  <div class="span6">
+    <div class="hero-unit">
+      <h4>Create Pad</h4>
+      <%= simple_form_for([@group, @pad]) do |f| %>
+        <%= f.error_notification %>
+        <%= f.input :name %>
+        <%= f.button :submit %>
+    <% end %>
+    </div>
+  </div>
+  <div class="span6">
+    <div class="hero-unit">
+      <h4>Create Group</h4>
+      <%= link_to 'Create Group', new_group_path, class: 'btn' %>
+    </div>
+  </div>
+</div>

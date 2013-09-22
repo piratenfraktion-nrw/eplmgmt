@@ -60,11 +60,16 @@ GEM
       railties (>= 3.2.6, < 5)
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
+    devise_ldap_authenticatable (0.8.1)
+      devise (>= 3.0)
+      net-ldap (>= 0.3.1, < 0.6.0)
     diff-lcs (1.2.4)
     email_spec (1.5.0)
       launchy (~> 2.1)
       mail (~> 2.2)
     erubis (2.7.0)
+    etherpad-lite (0.2.3)
+      rest-client (>= 1.6)
     execjs (2.0.1)
     factory_girl (4.2.0)
       activesupport (>= 3.0.0)
@@ -109,6 +114,7 @@ GEM
     mini_portile (0.5.1)
     minitest (4.7.5)
     multi_json (1.8.0)
+    net-ldap (0.3.1)
     nokogiri (1.6.0)
       mini_portile (~> 0.5.0)
     orm_adapter (0.4.0)
@@ -143,6 +149,8 @@ GEM
     rb-kqueue (0.2.0)
       ffi (>= 0.5.0)
     ref (1.0.5)
+    rest-client (1.6.7)
+      mime-types (>= 1.16)
     rolify (3.2.0)
     rspec (2.14.1)
       rspec-core (~> 2.14.0)
@@ -210,7 +218,9 @@ DEPENDENCIES
   coffee-rails (~> 4.0.0)
   database_cleaner (= 1.0.1)
   devise
+  devise_ldap_authenticatable
   email_spec
+  etherpad-lite
   factory_girl_rails
   figaro
   guard-bundler

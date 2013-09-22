@@ -1,0 +1,13 @@
+<%= simple_form_for(@group_user) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.association :group %>
+    <%= f.association :user %>
+    <%= f.input :manager %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

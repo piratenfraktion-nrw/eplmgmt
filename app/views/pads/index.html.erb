@@ -1,0 +1,34 @@
+<h1>Listing pads</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Group</th>
+      <th>Creator</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @pads.each do |pad| %>
+      <tr>
+        <td><%= pad.name %></td>
+        <td><%= pad.group.name %></td>
+        <td><%= pad.creator.name rescue 'unknown' %></td>
+        <td>
+          <%= link_to 'Show', '/p/'+pad.group.name+'/'+pad.name if @group.name != 'ungrouped' %>
+          <%= link_to 'Show', '/p/'+pad.name if @group.name == 'ungrouped' %>
+        </td>
+        <td><%= link_to 'Edit', edit_pad_path(pad) %></td>
+        <td><%= link_to 'Destroy', pad, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Pad', new_group_pad_path(@group) %>
