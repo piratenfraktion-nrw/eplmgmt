@@ -11,7 +11,7 @@ class PadsController < ApplicationController
     if params[:group_id].present?
     @group = Group.find(params[:group_id])
     else
-    @group = Group.find_by_name('ungrouped')
+    @group = Group.find_or_create_by_name('ungrouped')
     end
     @pads = @group.pads
   end
