@@ -12,25 +12,16 @@ class PadsController < ApplicationController
     if params[:group_id].present?
     @group = Group.find(params[:group_id])
     else
-    @group = Group.find_or_create_by_name('ungrouped')
+    @group = Group.find_or_create_by(name: 'ungrouped')
     end
 
     if current_user.nil?
-      @group = Group.find_by_name('ungrouped')
+      @group = Group.find_by(name: 'ungrouped')
     end
 
     @pads = Pad.joins(:group, :creator).order(sort_column + ' ' + sort_direction)
     @pads = @pads.where("pads.group_id = ?", @group.id)
     @pads = @pads.where(is_public: true) if current_user.nil?
-    pads = @pads.all
-    _pads = []
-    pads.each do |p|
-      pad = Pad.find(p.id)
-      pad.edited_at = DateTime.strptime(pad.ep_pad.last_edited.to_s, '%Q')
-      pad.save
-      _pads << pad
-    end
-    @pads = _pads
   end
 
   # GET /p/1
@@ -132,12 +123,14 @@ class PadsController < ApplicationController
       if params[:id].present?
         @pad = Pad.find(params[:id]) rescue nil
         @pad = Pad.find_by_name(params[:id]) if @pad.nil?
-        @pad = Pad.find_or_create_by_name_and_creator_id(params[:id], current_user.id) if @pad.nil? && !current_user.nil?
-        @pad = Pad.find_by_readonly_id(params[:id]) if @pad.nil? && current_user.nil?
+        @pad = Pad.find_or_create_by(name: params[:id],
+                                     creator_id: current_user.id) if @pad.nil? && !current_user.nil?
+        @pad = Pad.find_by(readonly_id: params[:id]) if @pad.nil? && current_user.nil?
       elsif params[:pad].present? && params[:group].present?
-        group = Group.find_by_name(params[:group])
-        @pad = group.pads.find_by_name(params[:pad]) rescue nil
-        @pad = group.pads.find_or_create_by_name_and_creator_id(params[:pad], current_user.id) if @pad.nil?
+        group = Group.find_by(name: params[:group])
+        @pad = group.pads.find_by(name: params[:pad]) rescue nil
+        @pad = group.pads.find_or_create_by(name: params[:pad],
+                                            creator_id: current_user.id) if @pad.nil?
       end
     end
 

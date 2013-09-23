@@ -15,6 +15,7 @@
 
   <tbody>
     <% @pads.each do |pad| %>
+      <% fetch_ep_last_edited(pad) %>
       <tr>
         <td>
           <%= pad.readonly_id if pad.is_public_readonly && current_user.nil? %>
