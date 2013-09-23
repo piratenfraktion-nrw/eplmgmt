@@ -4,7 +4,9 @@
   <thead>
     <tr>
       <th><%= sortable 'name', 'Name' %></th>
-      <th><%= sortable 'users_name', 'Creator' %></th>
+      <th><%= sortable 'users-name', 'Creator' %></th>
+      <th><%= sortable 'created_at', 'Created' %></th>
+      <th><%= sortable 'edited_at', 'Edited' %></th>
       <th></th>
       <th></th>
       <th></th>
@@ -19,6 +21,8 @@
           <%= pad.name if !pad.is_public_readonly || !current_user.nil?  %>
         </td>
         <td><%= pad.creator.name rescue 'unknown' %></td>
+        <td><%= pad.created_at %></td>
+        <td><%= pad.edited_at %></td>
         <td>
           <%= link_to 'Show', '/p/'+pad.group.name+'/'+pad.name if @group.name != 'ungrouped' && !current_user.nil? %>
           <%= link_to 'Show', '/p/'+pad.name if @group.name == 'ungrouped' && !current_user.nil? %>

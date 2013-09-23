@@ -1,7 +1,7 @@
 module ApplicationHelper
   def sortable(column, title = nil)  
     title ||= column.titleize
-    col = column.gsub('_','.')
+    col = column.gsub('-','.')
     css_class = (col == sort_column) ? "current #{sort_direction}" : nil  
     direction = (col == sort_column && sort_direction == "asc") ? "desc" : "asc"  
     link_to title, {:sort => column, :direction => direction}, {:class => css_class}  

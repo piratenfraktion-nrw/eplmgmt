@@ -22,7 +22,15 @@ class PadsController < ApplicationController
     @pads = Pad.joins(:group, :creator).order(sort_column + ' ' + sort_direction)
     @pads = @pads.where("pads.group_id = ?", @group.id)
     @pads = @pads.where(is_public: true) if current_user.nil?
-    @pads = @pads.all
+    pads = @pads.all
+    _pads = []
+    pads.each do |p|
+      pad = Pad.find(p.id)
+      pad.edited_at = DateTime.strptime(pad.ep_pad.last_edited.to_s, '%Q')
+      pad.save
+      _pads << pad
+    end
+    @pads = _pads
   end
 
   # GET /p/1

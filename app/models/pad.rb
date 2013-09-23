@@ -39,6 +39,7 @@ class Pad < ActiveRecord::Base
     ep_pad.password = self.password
     self.readonly_id = ep_pad.read_only_id
     self.pad_id = ep_pad.id
+    self.edited_at = DateTime.strptime(ep_pad.last_edited.to_s, '%Q')
   end
 
   def ep_pad

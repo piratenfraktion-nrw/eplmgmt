@@ -36,7 +36,7 @@ class ApplicationController < ActionController::Base
   def sort_column
     cols = Pad.column_names
     User.column_names.each { |g| cols << 'users.'+g }
-    sort = params[:sort].gsub('_','.') if params[:sort].present?
+    sort = params[:sort].gsub('-','.') if params[:sort].present?
     cols.include?(sort) ? sort : "name"  
   end
 end
