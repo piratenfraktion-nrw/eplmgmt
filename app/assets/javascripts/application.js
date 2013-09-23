@@ -13,6 +13,22 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap
+//= require bootstrap-modal
+//= require bootstrap-modalmanager
 //= require turbolinks
 //= require snap.min
 //= require_tree .
+
+$(function() {
+  var timeout;
+
+  $(document).on('page:fetch', function() {
+    timeout = setTimeout(function() {
+      $('.content').modalmanager('loading');
+    }, 300);
+  });
+
+  $(document).on('page:change', function() {
+    clearTimeout(timeout);
+  });
+});

@@ -34,6 +34,8 @@ GEM
       erubis (>= 2.6.6)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
+    bootstrap-modal-rails (2.1.1)
+      railties (>= 3.1)
     bootstrap-sass (2.3.2.2)
       sass (~> 3.2)
     builder (3.1.4)
@@ -216,6 +218,7 @@ PLATFORMS
 DEPENDENCIES
   better_errors
   binding_of_caller
+  bootstrap-modal-rails
   bootstrap-sass (~> 2.3.2.2)
   cancan
   capybara
