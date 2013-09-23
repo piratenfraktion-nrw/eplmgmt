@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   before_filter :load_params, only: [:create]
+  helper_method :sort_column, :sort_direction
   
   def load_params
     resource = controller_name.singularize.to_sym
@@ -25,5 +26,17 @@ class ApplicationController < ActionController::Base
     pad = Pad.find_by_group_id_and_id(group.id, params[:id]) if params[:group_id].present? rescue nil
     pad = Group.find_by_name('ungrouped').pads.find_by_name(params[:id]) if @pad.nil? rescue nil
     @current_ability ||= Ability.new(current_user, group, pad)
+  end
+
+  private
+  def sort_direction  
+    %w[asc desc].include?(params[:direction]) ?  params[:direction] : "asc"  
+  end
+
+  def sort_column  
+    cols = Pad.column_names
+    User.column_names.each { |g| cols << 'users.'+g }
+    sort = params[:sort].gsub('_','.')
+    cols.include?(sort) ? sort : "name"  
   end
 end

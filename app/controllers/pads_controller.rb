@@ -1,7 +1,6 @@
 class PadsController < ApplicationController
   include Etherpad
   include Mediawiki
-  helper_method :sort_column, :sort_direction
   layout 'pad', only: [:show]
   before_filter :authenticate_user!, except: [:show, :index]
   before_action :set_pad, only: [:show, :edit, :update, :destroy]
@@ -137,16 +136,5 @@ class PadsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def pad_params
       params.require(:pad).permit(:name, :password, :is_public, :is_public_readonly)
-    end
-
-    private
-    def sort_direction  
-      %w[asc desc].include?(params[:direction]) ?  params[:direction] : "asc"  
-    end
-
-    def sort_column  
-      cols = Pad.column_names
-      User.column_names.each { |g| cols << 'users.'+g }
-      cols.include?(params[:sort]) ? params[:sort] : "name"  
     end
 end

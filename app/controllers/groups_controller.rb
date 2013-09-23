@@ -1,5 +1,4 @@
 class GroupsController < ApplicationController
-  helper_method :sort_column, :sort_direction
   include Etherpad
   before_filter :authenticate_user!
   before_action :set_group, only: [:show, :edit, :update, :destroy]
@@ -78,16 +77,5 @@ class GroupsController < ApplicationController
       p = params.require(:group).permit(:name, {user_ids: []})
       p[:user_ids] << uid unless p[:user_ids].include?(uid)
       p
-    end
-
-    private
-    def sort_direction  
-      %w[asc desc].include?(params[:direction]) ?  params[:direction] : "asc"  
-    end
-
-    def sort_column  
-      cols = Pad.column_names
-      User.column_names.each { |g| cols << 'users.'+g }
-      cols.include?(params[:sort]) ? params[:sort] : "name"  
     end
 end
