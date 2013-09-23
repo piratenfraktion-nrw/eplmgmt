@@ -10,6 +10,7 @@ class Ability
     
     if user.has_role? :admin
       can :manage, :all
+      can :sign_up, :user
     elsif user.id
       can :read, Group
       can :create, Group
