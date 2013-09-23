@@ -1,1 +1,2 @@
 require 'Etherpad'
+require 'Mediawiki'

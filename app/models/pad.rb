@@ -48,4 +48,12 @@ class Pad < ActiveRecord::Base
   def delete_pad
     self.ep_pad.delete
   end
+
+  def delete_ep_pad
+    false
+  end
+
+  def delete_ep_pad=(del_pad)
+    del_pad
+  end
 end

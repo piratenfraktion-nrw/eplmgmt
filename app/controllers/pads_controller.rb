@@ -1,5 +1,6 @@
 class PadsController < ApplicationController
   include Etherpad
+  include Mediawiki
   helper_method :sort_column, :sort_direction
   layout 'pad', only: [:show]
   before_filter :authenticate_user!, except: [:show, :index]
@@ -82,9 +83,24 @@ class PadsController < ApplicationController
   # PATCH/PUT /pads/1
   # PATCH/PUT /pads/1.json
   def update
+    if params[:pad][:wiki_page].present?
+      mw.edit(params[:pad][:wiki_page], @pad.ep_pad.text, :summary => 'vie Eplmgmt by '+current_user.name)
+      @pad.wiki_page = params[:pad][:wiki_page]
+      @pad.save
+    end
+
     respond_to do |format|
       if @pad.update(pad_params)
-        format.html { redirect_to edit_pad_path(@pad), notice: 'Pad was successfully updated.' }
+        format.html { 
+          if (params[:pad][:delete_ep_pad] == 'true') && params[:pad][:wiki_page].present?
+            @pad.destroy
+            redirect_to ENV['MW_URL']+'/wiki/'+params[:pad][:wiki_page], notice: 'Pad was successfully updated'
+          elsif params[:pad][:wiki_page].present?
+            redirect_to ENV['MW_URL']+'/wiki/'+params[:pad][:wiki_page], notice: 'Pad was successfully updated'
+          else
+            redirect_to edit_pad_path(@pad), notice: 'Pad was successfully updated'
+          end
+        }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }

@@ -12,3 +12,15 @@
     <%= f.button :submit %>
   </div>
 <% end %>
+
+<% unless @pad.new_record? %>
+  <%= simple_form_for([@group, @pad]) do |f| %>
+    <div class="form-inouts">
+      <%= f.input :wiki_page %>
+      <%= f.input(:delete_ep_pad, as: :radio_buttons) %>
+    </div>
+    <div class="form-actions">
+      <%= f.button :submit, 'Save to Wiki' %>
+    </div>
+  <% end %>
+<% end %>
