@@ -84,7 +84,7 @@ class PadsController < ApplicationController
   # PATCH/PUT /pads/1.json
   def update
     if params[:pad][:wiki_page].present?
-      mw.edit(params[:pad][:wiki_page], @pad.ep_pad.text, :summary => 'vie Eplmgmt by '+current_user.name)
+      mw.edit(params[:pad][:wiki_page], @pad.ep_pad.text, :summary => 'via Eplmgmt by '+current_user.name)
       @pad.wiki_page = params[:pad][:wiki_page]
       @pad.save
     end
