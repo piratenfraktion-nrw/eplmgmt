@@ -33,10 +33,10 @@ class ApplicationController < ActionController::Base
     %w[asc desc].include?(params[:direction]) ?  params[:direction] : "asc"  
   end
 
-  def sort_column  
+  def sort_column
     cols = Pad.column_names
     User.column_names.each { |g| cols << 'users.'+g }
-    sort = params[:sort].gsub('_','.')
+    sort = params[:sort].gsub('_','.') if params[:sort].present?
     cols.include?(sort) ? sort : "name"  
   end
 end
