@@ -31,10 +31,6 @@
           <%= link_to padname, '/p/'+pad.readonly_id if pad.is_public_readonly && @group.name == 'ungrouped' && current_user.nil? %>
           <%= link_to padname, '/p/'+pad.name if !pad.is_public_readonly && @group.name == 'ungrouped' && current_user.nil? %>
         </td>
-        <td>
-          <%= pad.readonly_id if pad.is_public_readonly && current_user.nil? %>
-          <%= pad.name if !pad.is_public_readonly || !current_user.nil?  %>
-        </td>
         <td><%= pad.creator.name rescue 'unknown' %></td>
         <td><%= pad.created_at %></td>
         <td><%= pad.edited_at %></td>

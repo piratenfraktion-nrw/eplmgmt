@@ -1,22 +1,8 @@
 h1. Eplmgmt
 
-This application was generated with the "rails_apps_composer":https://github.com/RailsApps/rails_apps_composer gem provided by the "RailsApps Project":http://railsapps.github.io/.
+This Rails Application is a User and Admin frontend for Etherpad(-lite). It supports LDAP and some extra features like SaveTo(Media)Wiki.
 
-h2. Diagnostics
-
-This application was built with recipes that are known to work together.
-
-This application was built with preferences that are NOT known to work together.
-
-If the application doesn't work as expected, please "report an issue":https://github.com/RailsApps/rails_apps_composer/issues and include these diagnostics:
-
-We'd also like to know if you've found combinations of recipes or preferences that do work together.
-
-Recipes:
-["apps4", "controllers", "core", "email", "extras", "frontend", "gems", "git", "init", "models", "prelaunch", "railsapps", "readme", "routes", "saas", "setup", "testing", "views"]
-
-Preferences:
-{:git=>true, :apps4=>"none", :dev_webserver=>"puma", :prod_webserver=>"puma", :database=>"sqlite", :templates=>"erb", :unit_test=>"rspec", :integration=>"rspec-capybara", :continuous_testing=>"guard", :fixtures=>"factory_girl", :frontend=>"bootstrap", :bootstrap=>"sass", :email=>"smtp", :authentication=>"devise", :devise_modules=>"default", :authorization=>"cancan", :form_builder=>"simple_form", :starter_app=>"admin_app", :rvmrc=>false, :quiet_assets=>true, :local_env_file=>true, :better_errors=>true, :ban_spiders=>true, :jsruntime=>true, :github=>true}
+There is one Etherpad plugin that needs to be installed, get that "here":https://github.com/piratenfraktion-nrw/ep_eplmgmt
 
 h2. Ruby on Rails
 
@@ -29,12 +15,13 @@ Learn more about "Installing Rails":http://railsapps.github.io/installing-rails.
 
 h2. Database
 
-This application uses SQLite with ActiveRecord.
+This application uses SQLite with ActiveRecord. At least for development.
 
 h2. Development
 
 * Template Engine: ERB
 * Testing Framework: RSpec and Factory Girl
+** Testing not started yet
 * Front-end Framework: Twitter Bootstrap (Sass)
 * Form Builder: SimpleForm
 * Authentication: Devise
@@ -42,7 +29,7 @@ h2. Development
 
 h2. Email
 
-The application is configured to send email using a SMTP account.
+The application is configured to send email using a SMTP account. But does not send any email at the moment.
 
 h2. Getting Started
 
@@ -50,15 +37,15 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 
 h2. Documentation and Support
 
-This is the only documentation.
+This is the only documentation. You may ask questions via github's issues feature.
 
 h4. Issues
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+Probably a lot.
 
 h2. Similar Projects
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+Some closed source things running in the wild.
 
 h2. Contributing
 
@@ -73,8 +60,34 @@ If you add functionality to this application, create an alternative implementati
 
 h2. Credits
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+Created by vileda for Piratenfraktion im Landtag NRW
 
 h2. License
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+Eplmgmt is available for use under the following license, commonly known
+as the 3-clause (or "modified") BSD license:
+
+==============================
+Copyright (c) 2013 Piratenfraktion im Landtang NRW
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+1. Redistributions of source code must retain the above copyright
+   notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright
+   notice, this list of conditions and the following disclaimer in the
+   documentation and/or other materials provided with the distribution.
+3. The name of the author may not be used to endorse or promote products
+   derived from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
