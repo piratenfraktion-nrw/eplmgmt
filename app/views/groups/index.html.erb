@@ -6,7 +6,7 @@
       <th><%= sortable 'name', 'Name' %></th>
       <th><%= sortable 'users-name', 'Creator' %></th>
       <th><%= sortable 'created_at', 'Created' %></th>
-      <th></th>
+      <th><%= sortable 'updated_at', 'Updated' %></th>
       <th></th>
       <th></th>
     </tr>
@@ -15,12 +15,12 @@
   <tbody>
     <% @groups.each do |group| %>
       <tr>
-        <td><%= group.name %></td>
+        <td><%= link_to group.name, group %></td>
         <td><%= group.creator.name rescue '' %></td>
         <td><%= group.created_at rescue '' %></td>
-        <td><%= link_to 'Show', group %></td>
-        <td><%= link_to 'Edit', edit_group_path(group) %></td>
-        <td><%= link_to 'Destroy', group, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= group.updated_at rescue '' %></td>
+        <td><%= link_to 'Settings', edit_group_path(group) %></td>
+        <td><%= link_to 'Delete', group, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>

@@ -18,20 +18,29 @@
       <% fetch_ep_last_edited(pad) %>
       <tr>
         <td>
+          <%
+            padname = ''
+            if pad.is_public_readonly && current_user.nil?
+              padname = pad.readonly_id
+            elsif !pad.is_public_readonly || !current_user.nil?
+              padname = pad.name
+            end
+          %>
+          <%= link_to padname, '/p/'+pad.group.name+'/'+pad.name if @group.name != 'ungrouped' && !current_user.nil? %>
+          <%= link_to padname, '/p/'+pad.name if @group.name == 'ungrouped' && !current_user.nil? %>
+          <%= link_to padname, '/p/'+pad.readonly_id if pad.is_public_readonly && @group.name == 'ungrouped' && current_user.nil? %>
+          <%= link_to padname, '/p/'+pad.name if !pad.is_public_readonly && @group.name == 'ungrouped' && current_user.nil? %>
+        </td>
+        <td>
           <%= pad.readonly_id if pad.is_public_readonly && current_user.nil? %>
           <%= pad.name if !pad.is_public_readonly || !current_user.nil?  %>
         </td>
         <td><%= pad.creator.name rescue 'unknown' %></td>
         <td><%= pad.created_at %></td>
         <td><%= pad.edited_at %></td>
-        <td>
-          <%= link_to 'Show', '/p/'+pad.group.name+'/'+pad.name if @group.name != 'ungrouped' && !current_user.nil? %>
-          <%= link_to 'Show', '/p/'+pad.name if @group.name == 'ungrouped' && !current_user.nil? %>
-          <%= link_to 'Show', '/p/'+pad.readonly_id if pad.is_public_readonly && @group.name == 'ungrouped' && current_user.nil? %>
-          <%= link_to 'Show', '/p/'+pad.name if !pad.is_public_readonly && @group.name == 'ungrouped' && current_user.nil? %>
-        </td>
-        <td><%= link_to 'Edit', edit_pad_path(pad) %></td>
-        <td><%= link_to 'Destroy', pad, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        
+        <td><%= link_to 'Settings', edit_pad_path(pad) %></td>
+        <td><%= link_to 'Delete', pad, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
