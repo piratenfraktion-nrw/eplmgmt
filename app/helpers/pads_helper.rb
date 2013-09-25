@@ -8,7 +8,10 @@ module PadsHelper
 
   def fetch_ep_last_edited(pad)
     _pad = Pad.find(pad.id)
-    _pad.edited_at = DateTime.strptime(pad.ep_pad.last_edited.to_s, '%Q')
-    _pad.save
+    last_edit = DateTime.strptime(pad.ep_pad.last_edited.to_s, '%Q')
+    if last_edit.to_time.to_i > _pad.edited_at.to_time.to_i
+      _pad.edited_at = last_edit
+      _pad.save
+    end
   end
 end

@@ -40,7 +40,6 @@ class Pad < ActiveRecord::Base
     if self.is_public != self.is_public_was ||
       self.password != self.password_was
       pad = ep_pad
-      pad.public = self.is_public
       pad.password = self.password
     end
   end
@@ -59,5 +58,17 @@ class Pad < ActiveRecord::Base
 
   def delete_ep_pad=(del_pad)
     del_pad
+  end
+
+  def options
+    return 'read' if self.is_public_readonly
+    return 'write' if self.is_public && ep_pad.public?
+    return 'closed'
+  end
+
+  def options=(opt)
+    self.is_public = (opt == 'write')
+    self.is_public_readonly = (opt == 'read')
+    ep_pad.public = (self.is_public || self.is_public_readonly)
   end
 end

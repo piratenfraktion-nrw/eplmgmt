@@ -1,0 +1,37 @@
+<h1>Listing pads</h1>
+
+<table class="table sortable">
+  <thead>
+    <tr>
+      <th><%= sortable 'name', 'Name' %></th>
+      <th><%= sortable 'users-name', 'Creator' %></th>
+      <th><%= sortable 'created_at', 'Created' %></th>
+      <th><%= sortable 'updated_at', 'Edited' %></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @pads.each do |pad| %>
+      <% fetch_ep_last_edited(pad) %>
+      <tr>
+        <td>
+          <%= link_to pad.name, '/p/'+pad.group.name+'/'+pad.name if @group.name != 'ungrouped' %>
+          <%= link_to pad.name, '/p/'+pad.name if @group.name == 'ungrouped' %>
+        </td>
+        <td><%= pad.creator.name rescue 'unknown' %></td>
+        <td><%= pad.created_at %></td>
+        <td><%= pad.updated_at %></td>
+        
+        <td><%= link_to 'Settings', edit_pad_path(pad) %></td>
+        <td><%= link_to 'Delete', pad, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Pad', new_group_pad_path(@group) %>

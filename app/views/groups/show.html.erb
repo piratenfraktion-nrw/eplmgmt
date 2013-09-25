@@ -10,7 +10,8 @@
   <%= @group.creator.name %>
 </p>
 
-<%= link_to 'Show Pad list', group_pads_path(@group) %> |
 <%= link_to 'Create Pad', new_group_pad_path(@group) %> |
 <%= link_to 'Edit', edit_group_path(@group) %> |
 <%= link_to 'Back', groups_path %>
+
+<%= render partial: 'pads/padlist' %>

@@ -39,7 +39,6 @@ class ApplicationController < ActionController::Base
 
   def sort_column
     sort_by = 'updated_at'
-    sort_by = 'edited_at' if self.is_a?(PadsController)
     cols = Pad.column_names
     User.column_names.each { |g| cols << 'users.'+g }
     sort = params[:sort].gsub('-','.') if params[:sort].present?

@@ -83,20 +83,18 @@ class PadsController < ApplicationController
   # PATCH/PUT /pads/1
   # PATCH/PUT /pads/1.json
   def update
-    if params[:pad][:wiki_page].present?
-      mw.edit(params[:pad][:wiki_page], @pad.ep_pad.text, :summary => 'via Eplmgmt by '+current_user.name)
-      @pad.wiki_page = params[:pad][:wiki_page]
-      @pad.save
+    if pad_params[:wiki_page].present?
+      mw.edit(pad_params[:wiki_page], @pad.ep_pad.text, :summary => 'via Eplmgmt by '+current_user.name)
     end
 
     respond_to do |format|
       if @pad.update(pad_params)
         format.html { 
-          if (params[:pad][:delete_ep_pad] == 'true') && params[:pad][:wiki_page].present?
+          if (params[:pad][:delete_ep_pad] == 'true') && pad_params[:wiki_page].present?
             @pad.destroy
-            redirect_to ENV['MW_URL']+'/wiki/'+params[:pad][:wiki_page], notice: 'Pad was successfully updated'
-          elsif params[:pad][:wiki_page].present?
-            redirect_to ENV['MW_URL']+'/wiki/'+params[:pad][:wiki_page], notice: 'Pad was successfully updated'
+            redirect_to ENV['MW_URL']+'/wiki/'+@pad.wiki_page, notice: 'Pad was successfully updated'
+          elsif pad_params[:wiki_page].present?
+            redirect_to ENV['MW_URL']+'/wiki/'+@pad.wiki_page, notice: 'Pad was successfully updated'
           else
             redirect_to edit_pad_path(@pad), notice: 'Pad was successfully updated'
           end
@@ -138,6 +136,6 @@ class PadsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def pad_params
-      params.require(:pad).permit(:name, :password, :is_public, :is_public_readonly)
+      params.require(:pad).permit(:name, :password, :options, :wiki_page)
     end
 end

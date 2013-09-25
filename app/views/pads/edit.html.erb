@@ -1,11 +1,12 @@
 <h1>Editing pad</h1>
 
+
+<%= render 'form' %>
+
 <% if @pad.group.name == 'ungrouped' %>
   <%= link_to 'Goto Pad', '/p/'+@pad.name %>
 <% else %>
   <%= link_to 'Goto Pad', group_pad_path(@pad.group.name, @pad.name) %>
 <% end %>
-<%= render 'form' %>
-
-<%= link_to 'Show', @pad %> |
-<%= link_to 'Back', group_pads_path(@pad.group) %>
+|
+<%= link_to 'Back to Padlist', group_pads_path(@pad.group) %>
