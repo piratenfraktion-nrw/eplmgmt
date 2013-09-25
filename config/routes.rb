@@ -7,12 +7,12 @@ Eplmgmt::Application.routes.draw do
 
   resources :group_users, only: [:edit, :update, :destroy]
   resources :pads, only: [:edit, :update, :destroy]
-  resources :pads, path: :p, only: [:show], format: false, id: /[A-Za-z0-9\.]+/
+  get '/p/:id', to: 'pads#show', only: [:show], format: false, id: /[A-Za-z0-9\.]+/
+  get '/p/:group/:pad', to: 'pads#show', as: 'group_pad', only: [:show], format: false, group: /[A-Za-z0-9\.]+/, pad: /[A-Za-z0-9\._-]+/
+  get '/pads', to: 'pads#index', as: 'pads'
 
   root :to => "home#index"
   devise_for :users, :controllers => {:registrations => "registrations", :sessions => "sessions"}
   resources :users
 
-  get '/p/:group/:pad', to: 'pads#show', as: 'group_pad'
-  get '/pads', to: 'pads#index', as: 'pads'
 end

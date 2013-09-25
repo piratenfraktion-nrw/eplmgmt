@@ -6,7 +6,11 @@ class Ability
     group ||= Group.new
     pad ||= Pad.new
 
-    can :read, Pad
+    if pad.is_public || pad.is_public_readonly || !user.id.nil?
+      can :read, Pad
+    end
+    
+    can :read, Pad, :is_public => true
     
     if user.has_role? :admin
       can :manage, :all

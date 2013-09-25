@@ -18,18 +18,8 @@
       <% fetch_ep_last_edited(pad) %>
       <tr>
         <td>
-          <%
-            padname = ''
-            if pad.is_public_readonly && current_user.nil?
-              padname = pad.readonly_id
-            elsif !pad.is_public_readonly || !current_user.nil?
-              padname = pad.name
-            end
-          %>
-          <%= link_to padname, '/p/'+pad.group.name+'/'+pad.name if @group.name != 'ungrouped' && !current_user.nil? %>
-          <%= link_to padname, '/p/'+pad.name if @group.name == 'ungrouped' && !current_user.nil? %>
-          <%= link_to padname, '/p/'+pad.readonly_id if pad.is_public_readonly && @group.name == 'ungrouped' && current_user.nil? %>
-          <%= link_to padname, '/p/'+pad.name if !pad.is_public_readonly && @group.name == 'ungrouped' && current_user.nil? %>
+          <%= link_to pad.name, '/p/'+pad.group.name+'/'+pad.name if @group.name != 'ungrouped' %>
+          <%= link_to pad.name, '/p/'+pad.name if @group.name == 'ungrouped' %>
         </td>
         <td><%= pad.creator.name rescue 'unknown' %></td>
         <td><%= pad.created_at %></td>

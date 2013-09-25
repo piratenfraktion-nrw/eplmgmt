@@ -29,7 +29,7 @@ class PadsController < ApplicationController
   def show
     cookies[:sessionID] = nil
 
-    unless current_user.nil?
+    if user_signed_in?
       @author = ether.author(current_user.name, name: current_user.name)
       @author.sessions.each do |sess|
         if sess.expired? || !@pad.group.users.include?(current_user)
@@ -41,6 +41,9 @@ class PadsController < ApplicationController
         cookies[:sessionID] = {:value => sess.id}
       end
     end
+
+    @has_drawer = user_signed_in? && @pad.creator == current_user
+    @is_public_readonly = !user_signed_in? && @pad.is_public_readonly
   end
 
   # GET /pads/new
@@ -64,7 +67,6 @@ class PadsController < ApplicationController
 
     respond_to do |format|
       if @pad.save
-        logger.error { "FOOOOOO" }
         format.html {
           pad_url = '/p/'+@group.name+'/'+@pad.name
           pad_url = '/p/'+@pad.name if @group.name == 'ungrouped'

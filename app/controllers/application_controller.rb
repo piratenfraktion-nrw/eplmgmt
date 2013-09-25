@@ -16,7 +16,11 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   rescue_from CanCan::AccessDenied do |exception|
-    redirect_to :back, :alert => exception.message
+    begin
+      redirect_to :back, :alert => exception.message
+    rescue ActionController::RedirectBackError
+      redirect_to '/', :alert => exception.message
+    end
   end
 
   def current_ability
@@ -30,13 +34,15 @@ class ApplicationController < ActionController::Base
 
   private
   def sort_direction  
-    %w[asc desc].include?(params[:direction]) ?  params[:direction] : "asc"  
+    %w[asc desc].include?(params[:direction]) ?  params[:direction] : 'desc'  
   end
 
   def sort_column
+    sort_by = 'updated_at'
+    sort_by = 'edited_at' if self.is_a?(PadsController)
     cols = Pad.column_names
     User.column_names.each { |g| cols << 'users.'+g }
     sort = params[:sort].gsub('-','.') if params[:sort].present?
-    cols.include?(sort) ? sort : "name"  
+    cols.include?(sort) ? sort : sort_by
   end
 end

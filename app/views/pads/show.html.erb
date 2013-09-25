@@ -1,12 +1,29 @@
-<% if user_signed_in? && current_user == @pad.creator %>
+<% if @has_drawer %>
   <div class="snap-drawers">
     <div id="pad-menu" class="snap-drawer snap-drawer-left">
       <%= render partial: 'form' %>
     </div>
   </div>
+<script>
+    $('iframe').ready(function() {
+      setTimeout(function() {
+        $frame = $('.menu_left', $('iframe')[0].contentWindow.document);
+        $button = $('<li data-key="eplmgmt">' + 
+                    '<a id="eplmgmtButton" title="Show setting">'+
+                    '<span style="color:#333; height: 100%; font-size:1.25em; margin: auto 0.15em;">Eplmgmt</span>' +
+                    '</a>'+ 
+                    '</li>');
+        $button.on('click', function() { toggleMenu(); });
+        $frame.ready(function() {
+          console.log($frame);
+          $frame.append($button);
+          });
+      }, 1000);
+      });
+  </script>
 <% end %>
 
-<% if current_user.nil? && @pad.is_public_readonly %>
+<% if @is_public_readonly %>
 <iframe frameborder="0" src="/epl/p/<%= @pad.readonly_id %>"></iframe>
 <% else %>
 <iframe frameborder="0" src="/epl/p/<%= @pad.pad_id %>"></iframe>

@@ -94,6 +94,9 @@ GEM
       guard (>= 1.1)
       rspec (~> 2.11)
     hike (1.2.3)
+    httparty (0.11.0)
+      multi_json (~> 1.0)
+      multi_xml (>= 0.5.2)
     hub (1.10.6)
     i18n (0.6.5)
     jbuilder (1.5.1)
@@ -120,6 +123,7 @@ GEM
     mini_portile (0.5.1)
     minitest (4.7.5)
     multi_json (1.8.0)
+    multi_xml (0.5.5)
     net-ldap (0.3.1)
     nokogiri (1.6.0)
       mini_portile (~> 0.5.0)
@@ -130,6 +134,8 @@ GEM
     quiet_assets (1.0.2)
       railties (>= 3.1, < 5.0)
     rack (1.5.2)
+    rack-reverse-proxy (0.4.4)
+      rack (>= 1.0.0)
     rack-test (0.6.2)
       rack (>= 1.0)
     rails (4.0.0)
@@ -233,12 +239,14 @@ DEPENDENCIES
   guard-bundler
   guard-rails
   guard-rspec
+  httparty
   hub
   jbuilder (~> 1.2)
   jquery-rails
   mediawiki-gateway
   puma
   quiet_assets
+  rack-reverse-proxy
   rails (= 4.0.0)
   rails_layout
   rb-fchange
