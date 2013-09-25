@@ -2,7 +2,7 @@ h1. Eplmgmt
 
 This Rails Application is a User and Admin frontend for Etherpad(-lite). It supports LDAP and some extra features like SaveTo(Media)Wiki.
 
-There is one Etherpad plugin that needs to be installed, get that "here":https://github.com/piratenfraktion-nrw/ep_eplmgmt
+Currently it is completly Standalone and no changes to Etherpad are necessary.
 
 h2. Ruby on Rails
 
