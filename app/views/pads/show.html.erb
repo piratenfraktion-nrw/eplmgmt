@@ -1,30 +1,18 @@
 <% if @has_drawer %>
-  <div class="snap-drawers">
-    <div id="pad-menu" class="snap-drawer snap-drawer-left">
-      <%= render partial: 'form' %>
+    <div id="pad-menu" class="modal hide fade" style="display: none;">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3>Edit Pad Settings</h3>
+      </div>
+      <div class="modal-body">
+        <%= render partial: 'form' %>
+      </div>
     </div>
-  </div>
-<script>
-    $('iframe').ready(function() {
-      setTimeout(function() {
-        $frame = $('.menu_left', $('iframe')[0].contentWindow.document);
-        $button = $('<li data-key="eplmgmt">' + 
-                    '<a id="eplmgmtButton" title="Show setting">'+
-                    '<span style="color:#333; height: 100%; font-size:1.25em; margin: auto 0.15em;">Eplmgmt</span>' +
-                    '</a>'+ 
-                    '</li>');
-        $button.on('click', function() { toggleMenu(); });
-        $frame.ready(function() {
-          console.log($frame);
-          $frame.append($button);
-          });
-      }, 1000);
-      });
-  </script>
+  <div class="meny-arrow"></div>
 <% end %>
 
 <% if @is_public_readonly %>
 <iframe frameborder="0" src="/epl/p/<%= @pad.readonly_id %>"></iframe>
 <% else %>
-<iframe frameborder="0" src="/epl/p/<%= @pad.pad_id %>"></iframe>
+<iframe frameborder="0" id="pad-frame" height="100%" width="100%" src="/epl/p/<%= @pad.pad_id %>"></iframe>
 <% end %>

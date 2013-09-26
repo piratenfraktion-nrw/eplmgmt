@@ -93,6 +93,13 @@ class PadsController < ApplicationController
           if (params[:pad][:delete_ep_pad] == 'true') && pad_params[:wiki_page].present?
             @pad.destroy
             redirect_to ENV['MW_URL']+'/wiki/'+@pad.wiki_page, notice: 'Pad was successfully updated'
+          elsif (params[:pad][:delete_ep_pad] == 'true')
+            @pad.destroy
+            if @pad.group.name == 'ungrouped'
+              redirect_to '/pads'
+            else
+              redirect_to group_path(@pad.group)
+            end
           elsif pad_params[:wiki_page].present?
             redirect_to ENV['MW_URL']+'/wiki/'+@pad.wiki_page, notice: 'Pad was successfully updated'
           else

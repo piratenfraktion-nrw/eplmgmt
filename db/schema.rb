@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130923162517) do
+ActiveRecord::Schema.define(version: 20130926110833) do
 
   create_table "group_users", force: true do |t|
     t.integer  "group_id"
@@ -77,6 +77,7 @@ ActiveRecord::Schema.define(version: 20130923162517) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name"
+    t.string   "remember_token"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

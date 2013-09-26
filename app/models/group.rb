@@ -7,6 +7,11 @@ class Group < ActiveRecord::Base
   has_many :users, :through => :group_users
   belongs_to :creator, :class_name => "User", :foreign_key => "creator_id"
 
+  validates_presence_of :name
+  validates_presence_of :group_id, :on => :create
+  validates_uniqueness_of :name
+  validates_format_of :name, :with => /[a-zA-Z\._-]+/, :message => "is invalid"
+
   def etherpad
     ep_group = ether.group(self.name)
     self.group_id = ep_group.id

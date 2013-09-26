@@ -1,24 +1,11 @@
 $(function() {
-  window.snapper = new Snap({
-    element: $('.pads.show iframe')[0]
-  });
-  window.snapper.on('open', function() {
-    $('.snap-drawer-left').fadeIn();
-  });
-  window.snapper.on('close', function() {
-    $('.snap-drawer-left').fadeOut();
-  });
-  
-  $('#toggle-menu').on('click', function(){
-    toggleMenu();
-  });
+  initSnapper();
+  setTimeout(initSnapper, 4000); 
 });
 
-function toggleMenu() {
-  if( window.snapper.state().state === 'left' ){
-    window.snapper.close();
-  } else {
-    window.snapper.open('left');
-  }
+function initSnapper() {
+$('.meny-arrow').on('click', function(){
+    $('#pad-menu').modal();
+  });
 }
-document.domain = document.domain;
+

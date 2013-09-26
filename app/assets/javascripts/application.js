@@ -16,7 +16,6 @@
 //= require bootstrap-modal
 //= require bootstrap-modalmanager
 //= require turbolinks
-//= require snap.min
 //= require_tree .
 
 $(function() {
