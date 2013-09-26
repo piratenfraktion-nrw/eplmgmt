@@ -9,6 +9,7 @@ namespace :etherpad do
         pad = Pad.new
         pad.name = pid
         if pad.save
+          pad.pad_text = ether.get_pad(pid).text
           puts "imported pad #{pid}"
         else
           puts pad.errors.full_messages

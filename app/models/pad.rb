@@ -76,4 +76,12 @@ class Pad < ActiveRecord::Base
     self.is_public = (opt == 'write')
     self.is_public_readonly = (opt == 'read')
   end
+
+  def pad_text
+    ep_pad.text
+  end
+
+  def pad_text=(text)
+    ep_pad.text = text
+  end
 end
