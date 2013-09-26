@@ -84,4 +84,9 @@ class Pad < ActiveRecord::Base
   def pad_text=(text)
     ep_pad.text = text
   end
+
+  def wiki_url
+    return nil unless self.wiki_page.present?
+    return ENV['MW_URL']+'/wiki/'+self.wiki_page
+  end
 end

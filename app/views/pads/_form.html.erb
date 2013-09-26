@@ -3,13 +3,26 @@
 
   <div class="form-inputs">
     <%= f.input :name, hint: 'History will be lost on changing this' %>
-    <%= f.input :password, input_html: { value: @pad.password }, hint: 'Password protect this Pad, empty for no password' %>
-      <%= f.input :options, label: 'Public Status', hint: 'Set the Pad options', as: :radio_buttons, collection: [['Closed', 'closed'] ,['Public Readonly', 'read'], ['Public Write','write']] %>
+    <%= f.input :password,
+                input_html: { value: @pad.password },
+                hint: 'Password protect this Pad, empty for no password' %>
+    <%= f.input :options,
+        label: 'Public Status',
+        hint: 'Set the Pad options',
+        as: :radio_buttons,
+        collection: [['Closed', 'closed'] ,['Public Readonly (unsecure! someone could get write access)', 'read'], ['Public Write','write']] %>
   </div>
 
   <% unless @pad.new_record? %>
-      <%= f.input :wiki_page, hint: 'The target Wikipage for this Pad' %>
-      <%= f.input(:delete_ep_pad, label: 'Delete Pad?', as: :radio_buttons, hint: 'It will be LOST if choosing yes!') %>
+      <%
+          wiki_page_hint = 'The target Wikipage for this Pad'
+          wiki_page_hint = link_to 'Click here to show the Wikipage', @pad.wiki_url  unless @pad.wiki_url.nil?
+      %>
+      <%= f.input :wiki_page, hint: wiki_page_hint %>
+      <%= f.input(:delete_ep_pad,
+                  label: 'Delete Pad?',
+                  as: :radio_buttons,
+                  hint: 'It will be LOST if choosing yes!') %>
   <% end %>
 
   <div class="form-actions">
