@@ -10,18 +10,19 @@ class PadsController < ApplicationController
   # GET /pads.json
   def index
     if params[:group_id].present?
-    @group = Group.find(params[:group_id])
+      @group = Group.find(params[:group_id])
     else
-    @group = Group.find_or_create_by(name: 'ungrouped')
+      @group = Group.find_or_create_by(name: 'ungrouped')
     end
 
-    if current_user.nil?
+    unless user_signed_in?
       @group = Group.find_by(name: 'ungrouped')
     end
 
-    @pads = Pad.joins(:group, :creator).order(sort_column + ' ' + sort_direction)
+    @pads = @group.pads.joins(:group)
     @pads = @pads.where("pads.group_id = ?", @group.id)
     @pads = @pads.where(is_public: true) if current_user.nil?
+    @pads = @pads.order(sort_column + ' ' + sort_direction)
   end
 
   # GET /p/1
@@ -59,11 +60,10 @@ class PadsController < ApplicationController
   # POST /pads
   # POST /pads.json
   def create
-    @pad = Pad.new(pad_params)
     @group = Group.find(params[:group_id])
+    @pad = @group.pads.build(pad_params)
 
     @pad.creator_id = current_user.id
-    @pad.group = @group
 
     respond_to do |format|
       if @pad.save

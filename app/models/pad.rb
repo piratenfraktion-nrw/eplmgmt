@@ -10,7 +10,8 @@ class Pad < ActiveRecord::Base
   validates_presence_of :group_id, :on => :create, :message => "can't be blank"
   validates_presence_of :name
   validates_format_of :name, :with => /[a-zA-Z\._-]+/, :message => "is invalid"
-  validates :name, :uniqueness => {:scope => :group_id}
+  validates :name, uniqueness: {scope: :group_id}
+  validates_uniqueness_of :pad_id
 
   def etherpad
     if self.group.nil?
@@ -21,7 +22,7 @@ class Pad < ActiveRecord::Base
         group.group_id = @ep_group.id
         group.name = 'ungrouped'
         group.creator_id = self.creator_id
-        group.save!
+        group.save
       end
       self.group = group
     end
@@ -34,21 +35,23 @@ class Pad < ActiveRecord::Base
   end
 
   def update_ep
-    if self.name != self.name_was
+    if self.name != self.name_was && !self.new_record?
       text_was = self.ep_pad.text
       self.ep_pad.delete
       pad = self.group.ep_group.pad(self.name, text: text_was)
       self.pad_id = pad.id
     end
     if self.is_public != self.is_public_was ||
-      self.password != self.password_was
+       self.password != self.password_was ||
+       self.is_public_readonly != self.is_public_readonly_was
       pad = ep_pad
       pad.password = self.password
+      pad.public = (self.is_public || self.is_public_readonly)
     end
   end
 
   def ep_pad
-    group.ep_group.get_pad(self.pad_id)
+    self.group.ep_group.get_pad(self.pad_id)
   end
 
   def delete_pad
@@ -72,6 +75,5 @@ class Pad < ActiveRecord::Base
   def options=(opt)
     self.is_public = (opt == 'write')
     self.is_public_readonly = (opt == 'read')
-    ep_pad.public = (self.is_public || self.is_public_readonly)
   end
 end
