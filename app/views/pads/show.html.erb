@@ -12,7 +12,7 @@
 <% end %>
 
 <% if @is_public_readonly %>
-<iframe frameborder="0" src="/epl/p/<%= @pad.readonly_id %>"></iframe>
+<iframe frameborder="0" height="100%" width="100%" src="/epl/p/<%= @pad.readonly_id %>"></iframe>
 <% else %>
 <iframe frameborder="0" id="pad-frame" height="100%" width="100%" src="/epl/p/<%= @pad.pad_id %>"></iframe>
 <% end %>
