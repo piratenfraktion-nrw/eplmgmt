@@ -1,5 +1,7 @@
 Eplmgmt::Application.routes.draw do
 
+  devise_for :users, :controllers => {:registrations => "registrations", :sessions => "sessions"}
+  mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
   resources :groups do
     resources :pads, only: [:index, :new, :create]
     resources :group_users, path: :users, only: [:index, :create]
@@ -12,7 +14,6 @@ Eplmgmt::Application.routes.draw do
   get '/pads', to: 'pads#index', as: 'pads'
 
   root :to => "home#index"
-  devise_for :users, :controllers => {:registrations => "registrations", :sessions => "sessions"}
   resources :users
 
 end
