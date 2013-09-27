@@ -20,6 +20,9 @@
 //= require_tree .
 
 var loaderTimeout;
+function ready() {
+  $('select').select2();
+}
 
 $(document).on('page:fetch', function() {
   loaderTimeout = setTimeout(function() {
@@ -31,6 +34,5 @@ $(document).on('page:change', function() {
   clearTimeout(loaderTimeout);
 });
 
-$(document).on('page:load', function() {
-  $('select').select2();
-});
+$(document).ready(ready);
+$(document).on('page:load', ready);
