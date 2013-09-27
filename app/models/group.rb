@@ -8,7 +8,6 @@ class Group < ActiveRecord::Base
   belongs_to :creator, :class_name => "User", :foreign_key => "creator_id"
 
   validates_presence_of :name
-  validates_presence_of :group_id, :on => :create
   validates_uniqueness_of :name
   validates_format_of :name, :with => /[a-zA-Z\._-]+/, :message => "is invalid"
 

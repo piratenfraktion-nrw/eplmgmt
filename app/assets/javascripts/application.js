@@ -16,18 +16,21 @@
 //= require bootstrap-modal
 //= require bootstrap-modalmanager
 //= require turbolinks
+//= require select2
 //= require_tree .
 
-$(function() {
-  var timeout;
+var loaderTimeout;
 
-  $(document).on('page:fetch', function() {
-    timeout = setTimeout(function() {
-      $('.content').modalmanager('loading');
-    }, 300);
-  });
+$(document).on('page:fetch', function() {
+  loaderTimeout = setTimeout(function() {
+    $('.content').modalmanager('loading');
+  }, 300);
+});
 
-  $(document).on('page:change', function() {
-    clearTimeout(timeout);
-  });
+$(document).on('page:change', function() {
+  clearTimeout(loaderTimeout);
+});
+
+$(document).on('page:load', function() {
+  $('select').select2();
 });

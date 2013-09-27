@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 ruby '2.0.0'
 gem 'rails', '4.0.0'
+gem 'pg'
 gem 'sqlite3'
 gem 'sass-rails', '~> 4.0.0'
 gem 'uglifier', '>= 1.3.0'
@@ -19,7 +20,7 @@ gem 'mediawiki-gateway'
 gem 'puma'
 gem 'rolify'
 gem 'simple_form', '>= 3.0.0.rc'
-gem 'httparty'
+gem "select2-rails"
 gem "rack-reverse-proxy", :require => "rack/reverse_proxy"
 group :assets do
   gem 'therubyracer', :platform=>:ruby
