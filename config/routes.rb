@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 Eplmgmt::Application.routes.draw do
 
   devise_for :users, :controllers => {:registrations => "registrations", :sessions => "sessions"}
@@ -9,8 +11,8 @@ Eplmgmt::Application.routes.draw do
 
   resources :group_users, only: [:edit, :update, :destroy]
   resources :pads, only: [:edit, :update, :destroy]
-  get '/p/:id', to: 'pads#show', only: [:show], format: false, id: /[A-Za-z0-9\._-]+/
-  get '/p/:group/:pad', to: 'pads#show', as: 'group_pad', only: [:show], format: false, group: /[A-Za-z0-9\._-]+/, pad: /[A-Za-z0-9\._-]+/
+  get '/p/:id', to: 'pads#show', only: [:show], format: false, id: /[\.[:digit:][:alpha:]%_-]+/
+  get '/p/:group/:pad', to: 'pads#show', as: 'group_pad', only: [:show], format: false, group: /[\.[:digit:][:alpha:]%_-]+/, pad: /[\.[:digit:][:alpha:]%_-]+/
   get '/pads', to: 'pads#index', as: 'pads'
 
   root :to => "home#index"

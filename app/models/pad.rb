@@ -9,7 +9,7 @@ class Pad < ActiveRecord::Base
   validates_presence_of :pad_id, :on => :create, :message => "can't be blank"
   validates_presence_of :group_id, :on => :create, :message => "can't be blank"
   validates_presence_of :name
-  validates_format_of :name, :with => /[a-zA-Z\._-]+/, :message => "is invalid"
+  validates_format_of :name, :with => /[\.[:digit:][:alpha:]%_-]+/, :message => "is invalid"
   validates :name, uniqueness: {scope: :group_id}
   validates_uniqueness_of :pad_id
 

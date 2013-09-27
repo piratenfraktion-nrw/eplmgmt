@@ -1,3 +1,5 @@
+#encoding: UTF-8
+
 class Group < ActiveRecord::Base
   include Etherpad
   before_create :etherpad
@@ -9,7 +11,7 @@ class Group < ActiveRecord::Base
 
   validates_presence_of :name
   validates_uniqueness_of :name
-  validates_format_of :name, :with => /[a-zA-Z\._-]+/, :message => "is invalid"
+  validates_format_of :name, :with => /[\.[:digit:][:alpha:]%_-]+/, :message => "is invalid"
 
   def etherpad
     ep_group = ether.group(self.name)
