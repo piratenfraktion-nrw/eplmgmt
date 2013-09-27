@@ -13,7 +13,7 @@
 
   <tbody>
     <% @pads.each do |pad| %>
-      <% #fetch_ep_last_edited(pad) %>
+      <% fetch_ep_last_edited(pad) %>
       <tr>
         <td>
           <%= link_to pad.name, '/p/'+pad.group.name+'/'+pad.name if @group.name != 'ungrouped' %>

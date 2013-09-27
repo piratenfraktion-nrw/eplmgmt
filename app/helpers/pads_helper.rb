@@ -11,7 +11,7 @@ module PadsHelper
       _pad = Pad.find(pad.id)
       last_edit = DateTime.strptime(pad.ep_pad.last_edited.to_s, '%Q')
       if last_edit.to_time.to_i > _pad.edited_at.to_time.to_i
-        _pad.edited_at = DateTime.now
+        _pad.edited_at = last_edit
         _pad.save
       end
     rescue
