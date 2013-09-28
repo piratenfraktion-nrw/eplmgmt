@@ -26,11 +26,13 @@ class Pad < ActiveRecord::Base
       end
       self.group = group
     end
-    ep_pad = self.group.ep_group.pad(self.name)
-    self.pad_id = ep_pad.id
-    self.edited_at = DateTime.strptime(ep_pad.last_edited.to_s, '%Q')
-    self.readonly_id = ep_pad.read_only_id
-    update_ep
+    if self.name.present?
+      ep_pad = self.group.ep_group.pad(self.name)
+      self.pad_id = ep_pad.id
+      self.edited_at = DateTime.strptime(ep_pad.last_edited.to_s, '%Q')
+      self.readonly_id = ep_pad.read_only_id
+      update_ep
+    end
     true
   end
 
