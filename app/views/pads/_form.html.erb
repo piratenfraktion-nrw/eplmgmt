@@ -10,7 +10,7 @@
         label: 'Public Status',
         hint: 'Set the Pad options',
         as: :radio_buttons,
-        collection: [['Closed', 'closed'] ,['Public Readonly (unsecure! someone could get write access)', 'read'], ['Public Write','write']] %>
+        collection: [['Closed', 'closed'] ,['Public Readonly', 'read'], ['Public Write','write']] %>
   </div>
 
   <% unless @pad.new_record? %>
