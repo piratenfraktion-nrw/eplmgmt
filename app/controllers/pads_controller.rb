@@ -20,7 +20,7 @@ class PadsController < ApplicationController
     end
 
     @pads = @group.pads.joins(:group)
-    @pads = @pads.where("pads.group_id = ?", @group.id)
+    @pads = @pads.where('pads.group_id = ?', @group.id)
     @pads = @pads.where(is_public: true) if current_user.nil?
     @pads = @pads.order(sort_column + ' ' + sort_direction)
   end
@@ -70,7 +70,7 @@ class PadsController < ApplicationController
         format.html {
           pad_url = '/p/'+@group.name+'/'+@pad.name
           pad_url = '/p/'+@pad.name if @group.name == 'ungrouped'
-          redirect_to pad_url, notice: 'Pad was successfully created.'
+          redirect_to pad_url, notice: t('pad_created')
         }
         format.json { render action: 'show', status: :created, location: @pad }
       else
@@ -92,8 +92,8 @@ class PadsController < ApplicationController
         format.html { 
           if (params[:pad][:delete_ep_pad] == 'true') && pad_params[:wiki_page].present?
             @pad.destroy
-            redirect_to @pad.wiki_url notice: 'Pad was successfully updated'
-          elsif (params[:pad][:delete_ep_pad] == 'true')
+            redirect_to @pad.wiki_url, notice: t('pad_updated')
+          elsif params[:pad][:delete_ep_pad] == 'true'
             @pad.destroy
             if @pad.group.name == 'ungrouped'
               redirect_to '/pads'
@@ -101,9 +101,9 @@ class PadsController < ApplicationController
               redirect_to group_path(@pad.group)
             end
           elsif pad_params[:wiki_page].present?
-            redirect_to @pad.wiki_url, notice: 'Pad was successfully updated'
+            redirect_to @pad.wiki_url, notice: t('pad_updated')
           else
-            redirect_to edit_pad_path(@pad), notice: 'Pad was successfully updated'
+            redirect_to edit_pad_path(@pad), notice: t('pad_updated')
           end
         }
         format.json { head :no_content }

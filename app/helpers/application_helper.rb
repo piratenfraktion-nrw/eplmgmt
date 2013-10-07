@@ -3,11 +3,11 @@ module ApplicationHelper
     title ||= column.titleize
     col = column.gsub('-','.')
     css_class = (col == sort_column) ? "current #{sort_direction}" : nil  
-    direction = (col == sort_column && sort_direction == "asc") ? "desc" : "asc"  
+    direction = (col == sort_column && sort_direction == 'asc') ? 'desc' : 'asc'
     link_to title, {:sort => column, :direction => direction}, {:class => css_class}  
   end
 
-  def display_base_errors resource
+  def display_base_errors(resource)
     return '' if (resource.errors.empty?) or (resource.errors[:base].empty?)
     messages = resource.errors[:base].map { |msg| content_tag(:p, msg) }.join
     html = <<-HTML

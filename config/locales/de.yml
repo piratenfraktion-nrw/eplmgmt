@@ -1,0 +1,79 @@
+# Files in the config/locales directory are used for internationalization
+# and are automatically loaded by Rails. If you want to use locales other
+# than English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t 'hello'
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t('hello') %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# To learn more, please read the Rails Internationalization guide
+# available at http://guides.rubyonrails.org/i18n.html.
+
+de:
+  hello: "Hello world"
+  show: "Anzeigen"
+  back: "Zurück"
+  new_group: "Neue Gruppe"
+  edit: "Bearbeiten"
+  create_pad: "Pad erstellen"
+  create_group: "Gruppe erstellen"
+  home: "Etherpad"
+  wiki_page_hint_none: "Die Wikiseite wo das Pad gespeichert wird"
+  wiki_page_hint: "Hier klicken um Wikiseite anzuzeigen"
+  delete_pad_label: "Pad löschen?"
+  delete_pad_hint: "Es wird unwiederruflich gelsöcht!"
+  rename_hint: "Historie wird nicht mitkopiert!"
+  pad_password_hint: "Leer für keins"
+  public_status_label: "Öffentlichkeitseinstellung"
+  pad_options_hint: "Pad optionen"
+  name: "Name"
+  creator: "Ersteller"
+  created_at: "Erstellt am"
+  edited_at: "Letzte Bearbeitung"
+  settings_link: "Einstellungen"
+  delete_link: "Löschen"
+  new_pad_link: "Neues Pad"
+  are_you_sure: "Bist du sicher?"
+  go_to_pad_link: "Pad anzeigen"
+  back_to_padlist: "Zurück zur Padliste"
+  edit_pad_header: "Pad Einstellungen bearbeiten"
+  new_pad_header: "Neues Pad anlegen"
+  edit_pad_settings: "Pad Einstellungen bearbeiten"
+  is_invalid: "Ist ungültig"
+  group_user_updated: "Group user was successfully updated."
+  group_updated: "Gruppe wurde angelegt."
+  pad_updated: "Pad wurde aktualisiert"
+  pad_created: "Pad wurde angelegt."
+  not_admin: "Not authorized as an administrator."
+  user_updated: "User updated."
+  user_update_fail: "Unable to update user."
+  cant_delete_yourself: "Can't delete yourself."
+  user_deleted: "User deleted."
+  sign_in_link: "Einloggen"
+  group_user_created: "benutzer erstellt"
+  forgot_password_link: "Passwort Vergessen?"
+  sign_up_link: "Account erstellen"
+  edit_account_link: "Account bearbeiten"
+  admin_link: "Admin"
+  login_link: "Einloggen"
+  logout_link: "Ausloggen"
+  pads_link: "Pads"
+  groups_link: "Gruppen"
+  recent_edits: "Kürzlich bearbeitet"
+  activerecord:
+    errors:
+      models:
+        pad:
+          attributes:
+            name:
+              blank: Darf nicht leer sein!

@@ -30,7 +30,7 @@ class GroupUsersController < ApplicationController
 
     respond_to do |format|
       if @group_user.save
-        format.html { redirect_to @group_user, notice: 'Group user was successfully created.' }
+        format.html { redirect_to @group_user, notice: t('group_user_created') }
         format.json { render action: 'show', status: :created, location: @group_user }
       else
         format.html { render action: 'new' }
@@ -44,7 +44,7 @@ class GroupUsersController < ApplicationController
   def update
     respond_to do |format|
       if @group_user.update(group_user_params)
-        format.html { redirect_to @group_user, notice: 'Group user was successfully updated.' }
+        format.html { redirect_to @group_user, notice: t('group_user_updated') }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }

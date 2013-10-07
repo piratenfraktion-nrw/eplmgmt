@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
   before_validation :get_ldap_email
-  has_many :pads, :class_name => "Pad", :foreign_key => "creator_id"
+  has_many :pads, :class_name => 'Pad', :foreign_key => 'creator_id'
 
   rolify
   # Include default devise modules. Others available are:
@@ -9,6 +9,6 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   def get_ldap_email
-    self.email = Devise::LDAP::Adapter.get_ldap_param(self.name,"mail")[0]
+    self.email = Devise::LDAP::Adapter.get_ldap_param(self.name, 'mail')[0]
   end
 end

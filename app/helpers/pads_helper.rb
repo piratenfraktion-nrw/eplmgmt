@@ -15,7 +15,7 @@ module PadsHelper
         _pad.save
       end
     rescue
-      logger.error "HIT THE FUCKING BUG"
+      logger.error 'HIT THE FUCKING BUG'
     end
   end
 end

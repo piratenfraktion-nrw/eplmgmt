@@ -1,30 +1,30 @@
-<%= link_to "Eplmgmt", root_path, :class => 'brand' %>
+<%= link_to 'Eplmgmt', root_path, :class => 'brand' %>
 <ul class="nav">
   <% if user_signed_in? %>
     <li>
-    <%= link_to 'Logout', destroy_user_session_path, :method=>'delete' %>
+    <%= link_to t('logout_link'), destroy_user_session_path, :method=>'delete' %>
     </li>
     <li>
-    <%= link_to 'Pads', pads_path %>
+    <%= link_to t('pads_link'), pads_path %>
     </li>
     <li>
-    <%= link_to 'Groups', groups_path %>
+    <%= link_to t('groups_link'), groups_path %>
     </li>
   <% else %>
     <li>
-    <%= link_to 'Pads', pads_path %>
+    <%= link_to t('pads_link'), pads_path %>
     </li>
     <li>
-    <%= link_to 'Login', new_user_session_path %>
+    <%= link_to t('login_link'), new_user_session_path %>
     </li>
   <% end %>
   <% if user_signed_in? %>
     <li>
-    <%= link_to 'Edit account', edit_user_registration_path %>
+    <%= link_to t('edit_account_link'), edit_user_registration_path %>
     </li>
     <% if current_user.has_role? :admin %>
       <li>
-      <%= link_to 'Admin', users_path %>
+      <%= link_to t('admin_link'), users_path %>
       </li>
     <% end %>
   <% end %>

@@ -2,27 +2,31 @@
   <%= f.error_notification %>
 
   <div class="form-inputs">
-    <%= f.input :name, hint: 'History will be lost on changing this' %>
+    <%= f.input :name, hint: t('rename_hint') %>
     <%= f.input :password,
                 input_html: { value: @pad.password },
-                hint: 'Password protect this Pad, empty for no password' %>
+                hint: t('pad_password_hint') %>
     <%= f.input :options,
-        label: 'Public Status',
-        hint: 'Set the Pad options',
+        label: t('public_status_label'),
+        hint: t('pad_options_hint'),
         as: :radio_buttons,
-        collection: [['Closed', 'closed'] ,['Public Readonly', 'read'], ['Public Write','write']] %>
+        collection: [
+                %w(Closed closed),
+                ['Public Readonly', 'read'],
+                ['Public Write','write']]
+    %>
   </div>
 
   <% unless @pad.new_record? %>
       <%
-          wiki_page_hint = 'The target Wikipage for this Pad'
-          wiki_page_hint = link_to 'Click here to show the Wikipage', @pad.wiki_url  unless @pad.wiki_url.nil?
+          wiki_page_hint = t('wiki_page_hint_none')
+          wiki_page_hint = link_to t('wiki_page_hint'), @pad.wiki_url  unless @pad.wiki_url.nil?
       %>
       <%= f.input :wiki_page, hint: wiki_page_hint %>
       <%= f.input(:delete_ep_pad,
-                  label: 'Delete Pad?',
+                  label: t('delete_pad_label'),
                   as: :radio_buttons,
-                  hint: 'It will be LOST if choosing yes!') %>
+                  hint: t('delete_pad_hint')) %>
   <% end %>
 
   <div class="form-actions">

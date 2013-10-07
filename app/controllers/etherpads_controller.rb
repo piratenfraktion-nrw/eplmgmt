@@ -31,6 +31,6 @@ class EtherpadsController < ApplicationController
     end
     session[:ep_sessions][@group.id] = sess.id
     # Set the EtherpadLite session cookie. This will automatically be picked up by the jQuery plugin's iframe.
-    cookies[:sessionID] = {:value => sess.id, :domain => ".yourdomain.com"}
+    cookies[:sessionID] = {:value => sess.id, :domain => '.yourdomain.com'}
   end
 end

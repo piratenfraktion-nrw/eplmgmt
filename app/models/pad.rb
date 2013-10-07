@@ -4,12 +4,12 @@ class Pad < ActiveRecord::Base
   before_update :update_ep
   before_destroy :delete_pad
   belongs_to :group, touch: true
-  belongs_to :creator, :class_name => "User", :foreign_key => "creator_id"
+  belongs_to :creator, :class_name => 'User', :foreign_key => 'creator_id'
 
-  validates_presence_of :pad_id, :on => :create, :message => "can't be blank"
-  validates_presence_of :group_id, :on => :create, :message => "can't be blank"
+  validates_presence_of :pad_id, :on => :create
+  validates_presence_of :group_id, :on => :create
   validates_presence_of :name
-  validates_format_of :name, :with => /[\.[:digit:][:alpha:]%_-]+/, :message => "is invalid"
+  validates_format_of :name, :with => /[\.[:digit:][:alpha:]%_-]+/, :message => I18n.t('is_invalid')
   validates :name, uniqueness: {scope: :group_id}
   validates_uniqueness_of :pad_id
 
@@ -71,7 +71,7 @@ class Pad < ActiveRecord::Base
   def options
     return 'read' if self.is_public_readonly
     return 'write' if self.is_public && ep_pad.public?
-    return 'closed'
+    'closed'
   end
 
   def options=(opt)
@@ -89,6 +89,6 @@ class Pad < ActiveRecord::Base
 
   def wiki_url
     return nil unless self.wiki_page.present?
-    return ENV['MW_URL']+'/wiki/'+self.wiki_page
+    ENV['MW_URL']+'/wiki/'+self.wiki_page
   end
 end

@@ -1,10 +1,10 @@
 <table class="table sortable">
   <thead>
     <tr>
-      <th><%= sortable 'name', 'Name' %></th>
-      <th><%= sortable 'users-name', 'Creator' %></th>
-      <th><%= sortable 'created_at', 'Created' %></th>
-      <th><%= sortable 'updated_at', 'Edited' %></th>
+      <th><%= sortable 'name', t('name') %></th>
+      <th><%= sortable 'users-name', t('creator') %></th>
+      <th><%= sortable 'created_at', t('created_at') %></th>
+      <th><%= sortable 'updated_at', t('edited_at') %></th>
       <th></th>
       <th></th>
       <th></th>
@@ -23,8 +23,8 @@
         <td><%= pad.created_at %></td>
         <td><%= pad.updated_at %></td>
         
-        <td><%= link_to 'Settings', edit_pad_path(pad) %></td>
-        <td><%= link_to 'Delete', pad, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to t('settings_link'), edit_pad_path(pad) %></td>
+        <td><%= link_to t('delete_link'), pad, method: :delete, data: { confirm: t('are_you_sure')} %></td>
       </tr>
     <% end %>
   </tbody>
@@ -32,4 +32,4 @@
 
 <br>
 
-<%= link_to 'New Pad', new_group_pad_path(@group) %>
+<%= link_to t('new_pad_link'), new_group_pad_path(@group) %>

@@ -1,17 +1,17 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Name:</strong>
+  <strong><%= @group.name.humanize %>:</strong>
   <%= @group.name %>
 </p>
 
 <p>
-  <strong>Creator:</strong>
+  <strong><%= @group.creator.humanize %>:</strong>
   <%= @group.creator.name %>
 </p>
 
-<%= link_to 'Create Pad', new_group_pad_path(@group) %> |
-<%= link_to 'Edit', edit_group_path(@group) %> |
-<%= link_to 'Back', groups_path %>
+<%= link_to t('create_pad'), new_group_pad_path(@group) %> |
+<%= link_to t('edit'), edit_group_path(@group) %> |
+<%= link_to t('show'), groups_path %>
 
 <%= render partial: 'pads/padlist' %>
