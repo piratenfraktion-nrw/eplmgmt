@@ -11,9 +11,9 @@
         hint: t('pad_options_hint'),
         as: :radio_buttons,
         collection: [
-                %w(Closed closed),
-                ['Public Readonly', 'read'],
-                ['Public Write','write']]
+                [t('public_closed'), 'closed'],
+                [t('public_readonly'), 'read'],
+                [t('public_write'),'write']]
     %>
   </div>
 

@@ -68,3 +68,6 @@ en:
   pads_link: "Pads"
   groups_link: "Groups"
   recent_edits: "Recent edits"
+  public_readonly: "Public Readonly"
+  public_write: "Public Write"
+  public_closed: "Closed"

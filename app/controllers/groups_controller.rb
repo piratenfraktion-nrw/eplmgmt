@@ -75,8 +75,8 @@ class GroupsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def group_params
       uid = current_user.id
-      p = params.require(:group).permit(:name, {user_ids: []})
-      p[:user_ids] << uid unless p[:user_ids].include?(uid)
+      p = params.require(:group).permit(:name, {user_ids: [], manager_ids: []})
+      p[:manager_ids] << uid unless p[:manager_ids].include?(uid)
       p
     end
 end

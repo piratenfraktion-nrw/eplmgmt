@@ -71,9 +71,19 @@ de:
   groups_link: "Gruppen"
   recent_edits: "Kürzlich bearbeitet"
   activerecord:
+    models:
+      group: Gruppe
+    attributes:
+      group:
+        creator: Ersteller
+      pad:
+        creator: Ersteller
     errors:
       models:
         pad:
           attributes:
             name:
               blank: Darf nicht leer sein!
+  public_closed: "Nicht öffentlich"
+  public_readonly: "Öffentlich nur lesen"
+  public_write: "Öffentlich schreiben"

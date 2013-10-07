@@ -1,17 +1,17 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong><%= @group.name.humanize %>:</strong>
+  <strong><%= Group.human_attribute_name(:name) %>:</strong>
   <%= @group.name %>
 </p>
 
 <p>
-  <strong><%= @group.creator.humanize %>:</strong>
+  <strong><%= Group.human_attribute_name(:creator) %>:</strong>
   <%= @group.creator.name %>
 </p>
 
 <%= link_to t('create_pad'), new_group_pad_path(@group) %> |
 <%= link_to t('edit'), edit_group_path(@group) %> |
-<%= link_to t('show'), groups_path %>
+<%= link_to t('groups_link'), groups_path %>
 
 <%= render partial: 'pads/padlist' %>
