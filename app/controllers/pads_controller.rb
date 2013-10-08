@@ -43,7 +43,7 @@ class PadsController < ApplicationController
       end
     end
 
-    @has_drawer = user_signed_in? && @pad.creator == current_user
+    @has_drawer = can? :update, @pad
     @is_public_readonly = !user_signed_in? && @pad.is_public_readonly
   end
 

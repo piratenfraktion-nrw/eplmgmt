@@ -13,7 +13,8 @@ class UsersController < ApplicationController
   def update
     authorize! :update, @user, :message => t('not_admin')
     @user = User.find(params[:id])
-    if @user.update_attributes(params[:user])
+
+    if @user.update_attributes(params.require(:user).permit(:role_ids))
       redirect_to users_path, :notice => t('user_updated')
     else
       redirect_to users_path, :alert => t('user_update_fail')
