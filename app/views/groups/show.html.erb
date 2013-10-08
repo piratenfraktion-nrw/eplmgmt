@@ -10,6 +10,24 @@
   <%= @group.creator.name %>
 </p>
 
+<p>
+  <strong><%= Group.human_attribute_name(:users) %>:</strong>
+<ul class="inline">
+  <% @group.users.each do |user| %>
+      <li><%= user.name %></li>
+  <% end %>
+</ul>
+</p>
+
+<p>
+  <strong><%= Group.human_attribute_name(:managers) %>:</strong>
+<ul class="inline">
+  <% @group.managers.each do |user| %>
+      <li><%= user.name %></li>
+  <% end %>
+</ul>
+</p>
+
 <%= link_to t('create_pad'), new_group_pad_path(@group) %> |
 <%= link_to t('edit'), edit_group_path(@group) %> |
 <%= link_to t('groups_link'), groups_path %>

@@ -79,6 +79,8 @@ de:
       pad:
         creator: Ersteller
     errors:
+      messages:
+        record_invalid: Ungültiger Eintrag
       models:
         pad:
           attributes:

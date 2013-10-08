@@ -21,8 +21,7 @@ gem 'mediawiki-gateway'
 gem 'puma'
 gem 'rolify'
 gem 'simple_form', '>= 3.0.0.rc'
-gem "select2-rails"
-gem "rack-reverse-proxy", :require => "rack/reverse_proxy"
+gem 'select2-rails'
 group :assets do
   gem 'therubyracer', :platform=>:ruby
 end

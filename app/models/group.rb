@@ -5,9 +5,10 @@ class Group < ActiveRecord::Base
   before_create :etherpad
   before_update :update_users
   has_many :pads
-  has_many :group_users
-  has_many :users, :through => :group_users
-  has_many :managers, :through => :group_users, :source => :user, :conditions => {manager: true}
+  has_many :group_users, -> { where manager: false }, class_name: 'GroupUser'
+  has_many :group_managers, -> { where manager: true }, class_name: 'GroupUser'
+  has_many :users, through: :group_users
+  has_many :managers, through: :group_managers, source: :user
   belongs_to :creator, :class_name => 'User', :foreign_key => 'creator_id'
 
   validates_presence_of :name

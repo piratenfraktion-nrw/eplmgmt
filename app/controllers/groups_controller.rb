@@ -33,6 +33,11 @@ class GroupsController < ApplicationController
 
     respond_to do |format|
       if @group.save
+        #hack for https://github.com/rails/rails/issues/12464
+        params[:id] = @group.id
+        set_group
+        @group.update(group_params)
+        
         format.html { redirect_to @group, notice: t('group_updated') }
         format.json { render action: 'show', status: :created, location: @group }
       else
@@ -74,9 +79,9 @@ class GroupsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def group_params
-      uid = current_user.id
+      uid = current_user.id.to_s
       p = params.require(:group).permit(:name, {user_ids: [], manager_ids: []})
-      p[:manager_ids] << uid unless p[:manager_ids].include?(uid)
+      p[:manager_ids] << uid unless p[:manager_ids].include?(uid.to_s)
       p
     end
 end
