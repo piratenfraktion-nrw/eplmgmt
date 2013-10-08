@@ -71,3 +71,5 @@ en:
   public_readonly: "Public Readonly"
   public_write: "Public Write"
   public_closed: "Closed"
+  groups_header: "Listing groups"
+  pads_header: "Padlist"

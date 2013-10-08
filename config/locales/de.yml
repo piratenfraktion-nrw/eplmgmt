@@ -89,3 +89,5 @@ de:
   public_closed: "Nicht öffentlich"
   public_readonly: "Öffentlich nur lesen"
   public_write: "Öffentlich schreiben"
+  groups_header: "Alle Gruppen"
+  pads_header: "Padliste"
