@@ -37,7 +37,7 @@ class GroupsController < ApplicationController
         params[:id] = @group.id
         set_group
         @group.update(group_params)
-        
+
         format.html { redirect_to @group, notice: t('group_updated') }
         format.json { render action: 'show', status: :created, location: @group }
       else
