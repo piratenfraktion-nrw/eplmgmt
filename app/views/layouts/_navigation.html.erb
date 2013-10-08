@@ -7,19 +7,17 @@
     <li>
     <%= link_to t('groups_link'), groups_path %>
     </li>
+      <% if current_user.has_role? :admin %>
+          <li>
+            <%= link_to t('admin_link'), '/admin' %>
+          </li>
+      <% end %>
+      <li>
+        <%= link_to t('logout_link'), destroy_user_session_path, :method=>'delete' %>
+      </li>
   <% else %>
     <li>
     <%= link_to t('login_link'), new_user_session_path %>
     </li>
   <% end %>
-  <% if user_signed_in? %>
-    <% if current_user.has_role? :admin %>
-      <li>
-      <%= link_to t('admin_link'), '/admin' %>
-      </li>
-    <% end %>
-  <% end %>
-  <li>
-    <%= link_to t('logout_link'), destroy_user_session_path, :method=>'delete' %>
-  </li>
 </ul>
