@@ -31,7 +31,7 @@ de:
   wiki_page_hint_none: "Die Wikiseite wo das Pad gespeichert wird"
   wiki_page_hint: "Hier klicken um Wikiseite anzuzeigen"
   delete_pad_label: "Pad löschen?"
-  delete_pad_hint: "Es wird unwiederruflich gelsöcht!"
+  delete_pad_hint: "Es wird unwiderruflich gelöscht!"
   rename_hint: "Historie wird nicht mitkopiert!"
   pad_password_hint: "Leer für keins"
   public_status_label: "Öffentlichkeitseinstellung"

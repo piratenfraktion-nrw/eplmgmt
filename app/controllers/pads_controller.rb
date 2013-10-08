@@ -9,18 +9,13 @@ class PadsController < ApplicationController
   # GET /pads
   # GET /pads.json
   def index
-    if params[:group_id].present?
+    if user_signed_in? && params[:group_id].present?
       @group = Group.find(params[:group_id])
     else
       @group = Group.find_or_create_by(name: 'ungrouped')
     end
 
-    unless user_signed_in?
-      @group = Group.find_by(name: 'ungrouped')
-    end
-
-    @pads = @group.pads.joins(:group)
-    @pads = @pads.where('pads.group_id = ?', @group.id)
+    @pads = @group.pads.joins('LEFT JOIN users ON users.id = pads.creator_id')
     @pads = @pads.where(is_public: true) if current_user.nil?
     @pads = @pads.order(sort_column + ' ' + sort_direction)
   end
@@ -89,7 +84,7 @@ class PadsController < ApplicationController
 
     respond_to do |format|
       if @pad.update(pad_params)
-        format.html { 
+        format.html {
           if (params[:pad][:delete_ep_pad] == 'true') && pad_params[:wiki_page].present?
             @pad.destroy
             redirect_to @pad.wiki_url, notice: t('pad_updated')

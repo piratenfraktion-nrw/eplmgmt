@@ -2,9 +2,6 @@
 <ul class="nav">
   <% if user_signed_in? %>
     <li>
-    <%= link_to t('logout_link'), destroy_user_session_path, :method=>'delete' %>
-    </li>
-    <li>
     <%= link_to t('pads_link'), pads_path %>
     </li>
     <li>
@@ -19,13 +16,13 @@
     </li>
   <% end %>
   <% if user_signed_in? %>
-    <li>
-    <%= link_to t('edit_account_link'), edit_user_registration_path %>
-    </li>
     <% if current_user.has_role? :admin %>
       <li>
-      <%= link_to t('admin_link'), users_path %>
+      <%= link_to t('admin_link'), '/admin' %>
       </li>
     <% end %>
   <% end %>
+  <li>
+    <%= link_to t('logout_link'), destroy_user_session_path, :method=>'delete' %>
+  </li>
 </ul>
