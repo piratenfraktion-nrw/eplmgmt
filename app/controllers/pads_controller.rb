@@ -83,7 +83,7 @@ class PadsController < ApplicationController
     end
 
     respond_to do |format|
-      if @pad.update(pad_params)
+      if @pad.update(pad_params) || params[:pad][:delete_ep_pad] == 'true'
         format.html {
           if (params[:pad][:delete_ep_pad] == 'true') && pad_params[:wiki_page].present?
             @pad.destroy
@@ -93,7 +93,7 @@ class PadsController < ApplicationController
             if @pad.group.name == 'ungrouped'
               redirect_to '/pads', notice: t('pad_destroyed')
             else
-              redirect_to group_path(@pad.group), notice: t('pad_destroyed')
+              redirect_to @pad.group
             end
           elsif pad_params[:wiki_page].present?
             redirect_to @pad.wiki_url, notice: t('pad_updated')
