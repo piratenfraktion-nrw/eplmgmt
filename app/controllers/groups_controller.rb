@@ -7,7 +7,10 @@ class GroupsController < ApplicationController
   # GET /groups
   # GET /groups.json
   def index
-    @groups = Group.includes(:creator).where('name != ?', 'ungrouped').order(sort_column + ' ' + sort_direction)
+    @groups = Group
+                .joins('LEFT JOIN users ON users.id = groups.creator_id')
+                .where('groups.name != ?', 'ungrouped')
+                .order(sort_column + ' ' + sort_direction)
   end
 
   # GET /groups/1
