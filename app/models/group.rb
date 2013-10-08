@@ -4,7 +4,7 @@ class Group < ActiveRecord::Base
   include Etherpad
   before_create :etherpad
   before_update :update_users
-  has_many :pads
+  has_many :pads, dependent: :destroy
   has_many :group_users, -> { where manager: false }, class_name: 'GroupUser'
   has_many :group_managers, -> { where manager: true }, class_name: 'GroupUser'
   has_many :users, through: :group_users

@@ -51,7 +51,7 @@ de:
   edit_pad_settings: "Pad Einstellungen bearbeiten"
   is_invalid: "Ist ungültig"
   group_user_updated: "Group user was successfully updated."
-  group_updated: "Gruppe wurde angelegt."
+  group_updated: "Gruppe wurde aktualisiert."
   pad_updated: "Pad wurde aktualisiert"
   pad_created: "Pad wurde angelegt."
   not_admin: "Not authorized as an administrator."

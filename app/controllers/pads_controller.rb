@@ -32,7 +32,7 @@ class PadsController < ApplicationController
           sess.delete
         end
       end
-      if @pad.group.users.include?(current_user) || @pad.group.name == 'ungrouped'
+      if @pad.group.users.include?(current_user) || @pad.group.managers.include?(current_user) || @pad.group.name == 'ungrouped'
         sess = @pad.group.ep_group.create_session(@author, 480)
         cookies[:sessionID] = {:value => sess.id}
       end

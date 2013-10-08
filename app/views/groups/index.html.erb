@@ -3,10 +3,10 @@
 <table class="table table-striped table-hover sortable">
   <thead>
     <tr>
-      <th><%= sortable 'name', 'Name' %></th>
-      <th><%= sortable 'users-name', 'Creator' %></th>
-      <th><%= sortable 'created_at', 'Created' %></th>
-      <th><%= sortable 'updated_at', 'Updated' %></th>
+      <th><%= sortable 'name', t('name') %></th>
+      <th><%= sortable 'users-name', t('creator') %></th>
+      <th><%= sortable 'created_at', t('created_at') %></th>
+      <th><%= sortable 'updated_at', t('edited_at') %></th>
       <th></th>
       <th></th>
     </tr>
@@ -19,8 +19,8 @@
         <td><%= group.creator.name rescue '' %></td>
         <td><%= group.created_at rescue '' %></td>
         <td><%= group.updated_at rescue '' %></td>
-        <td><%= link_to 'Settings', edit_group_path(group) %></td>
-        <td><%= link_to 'Delete', group, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to t('settings_link'), edit_group_path(group) %></td>
+        <td><%= link_to t('delete_link'), group, method: :delete, data: { confirm: t('are_you_sure') } %></td>
       </tr>
     <% end %>
   </tbody>
