@@ -87,13 +87,13 @@ class PadsController < ApplicationController
         format.html {
           if (params[:pad][:delete_ep_pad] == 'true') && pad_params[:wiki_page].present?
             @pad.destroy
-            redirect_to @pad.wiki_url, notice: t('pad_updated')
+            redirect_to @pad.wiki_url, notice: t('pad_destroyed')
           elsif params[:pad][:delete_ep_pad] == 'true'
             @pad.destroy
             if @pad.group.name == 'ungrouped'
-              redirect_to '/pads'
+              redirect_to '/pads', notice: t('pad_destroyed')
             else
-              redirect_to group_path(@pad.group)
+              redirect_to group_path(@pad.group), notice: t('pad_destroyed')
             end
           elsif pad_params[:wiki_page].present?
             redirect_to @pad.wiki_url, notice: t('pad_updated')
@@ -114,7 +114,13 @@ class PadsController < ApplicationController
   def destroy
     @pad.destroy
     respond_to do |format|
-      format.html { redirect_to pads_url }
+      format.html {
+        if @pad.group.name == 'ungrouped'
+          redirect_to named_pads_url
+        else
+          redirect_to group_url(@pad.group)
+        end
+      }
       format.json { head :no_content }
     end
   end
@@ -138,6 +144,6 @@ class PadsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def pad_params
-      params.require(:pad).permit(:name, :password, :options, :wiki_page)
+      params.require(:pad).permit(:name, :password, :options, :wiki_page, :delete_ep_pad)
     end
 end

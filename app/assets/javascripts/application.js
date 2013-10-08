@@ -24,6 +24,9 @@
 var loaderTimeout;
 function ready() {
     $('select').select2();
+    $('form').submit(function(){
+        $('.content').modalmanager('loading');
+    });
 }
 
 $(window).bind('popstate', function () {

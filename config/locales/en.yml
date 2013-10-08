@@ -73,3 +73,7 @@ en:
   public_closed: "Closed"
   groups_header: "Listing groups"
   pads_header: "Padlist"
+  group_hint: "The name of the group"
+  group_users_hint: "Edit and view pads"
+  group_manager_hint: "Can do everything within this group"
+  pad_destroyed: "Pad destroyed!"

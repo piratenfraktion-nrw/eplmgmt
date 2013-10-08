@@ -3,9 +3,9 @@
   <%= f.error_notification %>
 
   <div class="form-inputs">
-    <%= f.input :name %>
-    <%= f.association :users %>
-    <%= f.association :managers %>
+    <%= f.input :name, hint: t('group_hint') %>
+    <%= f.association :users, hint: t('group_users_hint') %>
+    <%= f.association :managers, hint: t('group_manager_hint') %>
   </div>
 
   <div class="form-actions">
