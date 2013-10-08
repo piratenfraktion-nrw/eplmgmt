@@ -7,13 +7,17 @@
         <%= f.error_notification %>
         <%= f.input :name %>
         <%= f.button :submit %>
-    <% end %>
+      <% end %>
     </div>
   </div>
   <div class="span6">
     <div class="well">
       <h4><%= t('create_group') %></h4>
-      <%= link_to t('create_group'), new_group_path, class: 'btn' %>
+      <%= simple_form_for(Group.new) do |f| %>
+          <%= f.error_notification %>
+          <%= f.input :name %>
+          <%= f.button :submit %>
+      <% end %>
     </div>
   </div>
 </div>

@@ -77,3 +77,4 @@ en:
   group_users_hint: "Edit and view pads"
   group_manager_hint: "Can do everything within this group"
   pad_destroyed: "Pad destroyed!"
+  group_created: "Group created"

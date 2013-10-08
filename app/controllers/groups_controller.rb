@@ -41,7 +41,7 @@ class GroupsController < ApplicationController
         set_group
         @group.update(group_params)
 
-        format.html { redirect_to @group, notice: t('group_updated') }
+        format.html { redirect_to @group, notice: t('group_created') }
         format.json { render action: 'show', status: :created, location: @group }
       else
         format.html { render action: 'new' }
@@ -84,6 +84,7 @@ class GroupsController < ApplicationController
     def group_params
       uid = current_user.id.to_s
       p = params.require(:group).permit(:name, {user_ids: [], manager_ids: []})
+      p[:manager_ids] = [] unless p[:manager_ids].present?
       p[:manager_ids] << uid unless p[:manager_ids].include?(uid.to_s)
       p
     end

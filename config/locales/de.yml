@@ -101,3 +101,4 @@ de:
             name:
               taken: Schon vergeben!
               blank: Darf nicht leer sein!
+  group_created: "Gruppe wurde angelegt"
