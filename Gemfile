@@ -22,7 +22,6 @@ gem 'puma'
 gem 'rolify'
 gem 'simple_form', '>= 3.0.0.rc'
 gem 'select2-rails'
-gem "rubysl", "~> 2.0"
 group :assets do
   gem 'therubyracer', :platform=>:ruby
 end
