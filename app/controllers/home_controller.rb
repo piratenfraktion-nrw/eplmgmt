@@ -1,15 +1,27 @@
 class HomeController < ApplicationController
-  before_filter :authenticate_user!
-  skip_authorization_check
+  before_filter :authenticate_user!, except: [:pads]
 
   def index
     @group = Group.find_or_create_by(name: 'ungrouped')
-    @pad = Pad.new
+    @pad = @group.pads.build
+    fetch_pads(@group)
+  end
 
-    @group = Group.find_or_create_by(name: 'ungrouped')
-    @pads = @group.pads.joins(:group)
-    @pads = @pads.where('pads.group_id = ?', @group.id)
-    @pads = @pads.where(is_public: true) if current_user.nil?
-    @pads = @pads.order(sort_column + ' ' + sort_direction).limit(10)
+  # GET /p
+  # GET /p.json
+  def pads
+    if user_signed_in? && params[:group_id].present?
+      @group = Group.find(params[:group_id])
+    else
+      @group = Group.find_or_create_by(name: 'ungrouped')
+    end
+    fetch_pads(@group)
+  end
+
+
+  def fetch_pads(group)
+    @pads = group.pads.joins('LEFT JOIN users ON users.id = pads.creator_id')
+    @pads = @pads.where("is_public = 't' or is_public_readonly = 't'") if current_user.nil?
+    @pads = @pads.order(sort_column + ' ' + sort_direction)
   end
 end

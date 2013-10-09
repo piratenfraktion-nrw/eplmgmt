@@ -4,20 +4,31 @@
     <div class="well">
       <h4><%= t('create_pad') %></h4>
       <%= simple_form_for([@group, @pad]) do |f| %>
-        <%= f.error_notification %>
-        <%= f.input :name %>
-        <%= f.button :submit %>
+          <%= f.error_notification %>
+          <%= f.input :name %>
+          <%= f.button :submit %>
       <% end %>
     </div>
   </div>
   <div class="span6">
     <div class="well">
-      <h4><%= t('create_group') %></h4>
-      <%= simple_form_for(Group.new) do |f| %>
-          <%= f.error_notification %>
-          <%= f.input :name %>
-          <%= f.button :submit %>
-      <% end %>
+      <div class="row">
+        <div class="span6">
+          <h4><%= t('create_group') %></h4>
+        </div>
+      </div>
+      <div class="row">
+        <div class="span3">
+          <%= simple_form_for(Group.new) do |f| %>
+              <%= f.error_notification %>
+              <%= f.input :name %>
+              <%= f.button :submit %>
+          <% end %>
+        </div>
+        <div class="span2">
+          Hierüber kannst Du ein Pad anlegen, dass alle Fraktionsmitglieder bearbeiten können.
+        </div>
+      </div>
     </div>
   </div>
 </div>

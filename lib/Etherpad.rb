@@ -1,6 +1,3 @@
-require 'rails'
-require 'etherpad-lite/client'
-
 module Etherpad
   mattr_accessor :api_url
   mattr_accessor :api_version

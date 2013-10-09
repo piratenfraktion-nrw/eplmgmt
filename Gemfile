@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.0.0'
+ruby '2.1.0'
 gem 'rails', '4.0.0'
 gem 'pg'
 gem 'sqlite3'
@@ -22,6 +22,7 @@ gem 'puma'
 gem 'rolify'
 gem 'simple_form', '>= 3.0.0.rc'
 gem 'select2-rails'
+gem "rubysl", "~> 2.0"
 group :assets do
   gem 'therubyracer', :platform=>:ruby
 end

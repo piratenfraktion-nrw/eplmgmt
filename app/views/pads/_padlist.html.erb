@@ -23,8 +23,8 @@
         <td><%= pad.created_at %></td>
         <td><%= pad.updated_at %></td>
         
-        <td><%= link_to t('settings_link'), edit_pad_path(pad) %></td>
-        <td><%= link_to t('delete_link'), pad, method: :delete, data: { confirm: t('are_you_sure')} %></td>
+        <td><%= link_to t('settings_link'), edit_group_pad_path(@group, pad) %></td>
+        <td><%= link_to t('delete_link'), group_pad_path(@group, pad), method: :delete, data: { confirm: t('are_you_sure')} %></td>
       </tr>
     <% end %>
   </tbody>

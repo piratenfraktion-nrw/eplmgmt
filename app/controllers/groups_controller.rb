@@ -2,11 +2,12 @@ class GroupsController < ApplicationController
   include Etherpad
   before_filter :authenticate_user!
   before_action :set_group, only: [:show, :edit, :update, :destroy]
-  load_and_authorize_resource
+  load_and_authorize_resource :group, except: [:index]
 
   # GET /groups
   # GET /groups.json
   def index
+    authorize! :groups, current_user
     @groups = Group
                 .joins('LEFT JOIN users ON users.id = groups.creator_id')
                 .where('groups.name != ?', 'ungrouped')

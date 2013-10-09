@@ -1,6 +1,3 @@
-require 'rails'
-require 'media_wiki'
-
 module Mediawiki
   mattr_accessor :api_url
   mattr_accessor :username

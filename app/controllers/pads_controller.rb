@@ -4,7 +4,8 @@ class PadsController < ApplicationController
   layout 'pad', only: [:show]
   before_filter :authenticate_user!, except: [:show, :index]
   before_action :set_pad, only: [:show, :edit, :update, :destroy]
-  load_and_authorize_resource
+  load_and_authorize_resource :pad
+  skip_authorize_resource only: [:edit, :update]
 
   # GET /pads
   # GET /pads.json
@@ -23,7 +24,6 @@ class PadsController < ApplicationController
   # GET /p/1
   # GET /p/1.json
   def show
-    authorize! :read, @pad
     cookies[:sessionID] = nil
 
     if user_signed_in?
@@ -41,6 +41,7 @@ class PadsController < ApplicationController
 
     @has_drawer = can? :update, @pad
     @is_public_readonly = !user_signed_in? && @pad.is_public_readonly
+    @group = @pad.group
   end
 
   # GET /pads/new
@@ -51,6 +52,8 @@ class PadsController < ApplicationController
 
   # GET /pads/1/edit
   def edit
+    authorize! :update, @pad
+    @group = @pad.group
   end
 
   # POST /pads
@@ -79,6 +82,8 @@ class PadsController < ApplicationController
   # PATCH/PUT /pads/1
   # PATCH/PUT /pads/1.json
   def update
+    authorize! :update, @pad
+    @group = @pad.group
     if pad_params[:wiki_page].present?
       mw.edit(pad_params[:wiki_page], @pad.ep_pad.text, :summary => 'via Eplmgmt by '+current_user.name)
     end
@@ -99,7 +104,11 @@ class PadsController < ApplicationController
           elsif pad_params[:wiki_page].present?
             redirect_to @pad.wiki_url, notice: t('pad_updated')
           else
-            redirect_to edit_pad_path(@pad), notice: t('pad_updated')
+            if @pad.group.name == 'ungrouped'
+              redirect_to named_pad_path(@pad.name), notice: t('pad_updated')
+            else
+              redirect_to named_group_pad_path(@pad.group.name, @pad.name), notice: t('pad_updated')
+            end
           end
         }
         format.json { head :no_content }
@@ -129,12 +138,12 @@ class PadsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_pad
-      if params[:id].present?
+      if params[:pad].present? || params[:id].present?
         @pad = Pad.find(params[:id]) rescue nil
-        @pad = Pad.find_by_name(params[:id]) if @pad.nil?
-        @pad = Pad.find_or_create_by(name: params[:id],
+        @pad ||= Pad.find_by(name: params[:pad])
+        @pad = Pad.find_or_create_by(name: params[:pad],
                                      creator_id: current_user.id) if @pad.nil? && !current_user.nil?
-        @pad = Pad.find_by(readonly_id: params[:id]) if @pad.nil? && current_user.nil?
+        @pad = Pad.find_by(readonly_id: params[:pad]) if @pad.nil? && current_user.nil?
       elsif params[:pad].present? && params[:group].present?
         group = Group.find_by(name: params[:group])
         @pad = group.pads.find_by(name: params[:pad]) rescue nil

@@ -1,5 +1,4 @@
 class SessionsController < Devise::SessionsController
-  skip_authorization_check
   after_filter :set_ep_session, :only => :new
   def create
     cookies[:sessionID] = 'fresh'
