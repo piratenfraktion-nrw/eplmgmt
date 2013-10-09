@@ -16,13 +16,14 @@ class PadsController < ApplicationController
     end
 
     @pads = @group.pads.joins('LEFT JOIN users ON users.id = pads.creator_id')
-    @pads = @pads.where(is_public: true) if current_user.nil?
+    @pads = @pads.where("is_public = 't' or is_public_readonly = 't'") if current_user.nil?
     @pads = @pads.order(sort_column + ' ' + sort_direction)
   end
 
   # GET /p/1
   # GET /p/1.json
   def show
+    authorize! :read, @pad
     cookies[:sessionID] = nil
 
     if user_signed_in?
