@@ -41,7 +41,6 @@ class PadsController < ApplicationController
 
     @has_drawer = can? :update, @pad
     @is_public_readonly = !user_signed_in? && @pad.is_public_readonly
-    @group = @pad.group
   end
 
   # GET /pads/new
@@ -143,18 +142,17 @@ class PadsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_pad
-      if params[:pad].present? || params[:id].present?
-        @pad = Pad.find(params[:id]) rescue nil
-        @pad ||= Pad.find_by(name: params[:pad])
-        @pad = Pad.find_or_create_by(name: params[:pad],
-                                     creator_id: current_user.id) if @pad.nil? && !current_user.nil?
-        @pad = Pad.find_by(readonly_id: params[:pad]) if @pad.nil? && current_user.nil?
-      elsif params[:pad].present? && params[:group].present?
-        group = Group.find_by(name: params[:group])
-        @pad = group.pads.find_by(name: params[:pad]) rescue nil
-        @pad = group.pads.find_or_create_by(name: params[:pad],
-                                            creator_id: current_user.id) if @pad.nil?
+      if params[:pad].present? && !params[:id].present?
+        if params[:group].present?
+          @group = Group.find_by(name: params[:group])
+        else
+          @group = Group.find_by(name: 'ungrouped')
+        end
+        @pad = @group.pads.where(['pads.name = ?', params[:pad]]).limit(1).first
+      else
+        @pad = Pad.find(params[:id])
       end
+      @group = @pad.group
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
