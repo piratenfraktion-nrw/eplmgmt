@@ -5,7 +5,7 @@ class HomeController < ApplicationController
     @group = Group.find_or_create_by(name: 'ungrouped')
     @pad = @group.pads.build
     @pads = Pad.joins('LEFT JOIN users ON users.id = pads.creator_id')
-    @pads = @pads.order(sort_column + ' ' + sort_direction)
+    @pads = @pads.order(sort_column + ' ' + sort_direction).limit(10)
   end
 
   # GET /p
