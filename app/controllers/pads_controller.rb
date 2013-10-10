@@ -27,7 +27,7 @@ class PadsController < ApplicationController
     cookies[:sessionID] = nil
 
     if user_signed_in?
-      @author = ether.author(current_user.name, name: current_user.name)
+      @author = ether.author(current_user.name, name: current_user.nickname)
       @author.sessions.each do |sess|
         if sess.expired? || !@pad.group.users.include?(current_user)
           sess.delete
@@ -85,7 +85,7 @@ class PadsController < ApplicationController
     authorize! :update, @pad
     @group = @pad.group
     if pad_params[:wiki_page].present?
-      mw.edit(pad_params[:wiki_page], @pad.ep_pad.text, :summary => 'via Eplmgmt by '+current_user.name)
+      mw.edit(pad_params[:wiki_page], @pad.ep_pad.text, :summary => 'via Eplmgmt by '+current_user.nickname)
     end
 
     if params[:pad][:options] == 'write'

@@ -20,7 +20,7 @@
               <%= link_to pad.name, '/p/'+pad.group.name+'/'+pad.name if pad.group.name != 'ungrouped' %>
               <%= link_to pad.name, '/p/'+pad.name if pad.group.name == 'ungrouped' %>
             </td>
-            <td><%= pad.creator.name rescue 'unknown' %></td>
+            <td><%= pad.creator.nickname rescue 'unknown' %></td>
             <td><%= pad.created_at %></td>
             <td><%= pad.updated_at %></td>
 
