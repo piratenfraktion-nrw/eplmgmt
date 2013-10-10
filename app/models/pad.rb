@@ -44,13 +44,9 @@ class Pad < ActiveRecord::Base
       pad = self.group.ep_group.pad(self.name, text: text_was)
       self.pad_id = pad.id
     end
-    if self.is_public != self.is_public_was ||
-       self.password != self.password_was ||
-       self.is_public_readonly != self.is_public_readonly_was
-      pad = ep_pad
-      pad.password = self.password
-      pad.public = (self.is_public || self.is_public_readonly)
-    end
+    pad = ep_pad
+    pad.password = self.password
+    pad.public = (self.is_public || self.is_public_readonly)
   end
 
   def ep_pad
