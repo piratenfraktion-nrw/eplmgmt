@@ -101,7 +101,7 @@ class PadsController < ApplicationController
           elsif params[:pad][:delete_ep_pad] == 'true'
             @pad.destroy
             if @pad.group.name == 'ungrouped'
-              redirect_to '/pads', notice: t('pad_destroyed')
+              redirect_to '/p', notice: t('pad_destroyed')
             else
               redirect_to @pad.group
             end
@@ -152,7 +152,7 @@ class PadsController < ApplicationController
       else
         @pad = Pad.find(params[:id])
       end
-      @group = @pad.group
+      @group = @pad.group if @pad
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
