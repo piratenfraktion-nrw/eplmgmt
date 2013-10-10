@@ -41,26 +41,6 @@ class ApplicationController < ActionController::Base
 
     @current_ability ||= Ability.new(current_user, group, pad)
   end
-=begin
-  def current_ability
-    pad = nil
-    group = nil
-    if params[:id].present?
-      pad = Pad.find(params[:id]) rescue nil
-      pad = Pad.find_by_name(params[:id]) if pad.nil?
-      pad = Pad.find_by(readonly_id: params[:id]) if pad.nil? && current_user.nil?
-      group = pad.group unless pad.nil?
-      group = Group.find(params[:id]) if pad.nil?
-    elsif params[:pad].present? && params[:group].present?
-      group = Group.find_by(name: params[:group])
-      pad = group.pads.find_by(name: params[:pad]) rescue nil
-    elsif params[:group_id].present?
-      group = Group.find(params[:group_id])
-    end
-
-    @current_ability ||= Ability.new(current_user, group, pad)
-  end
-=end
 
   def sort_direction  
     %w[asc desc].include?(params[:direction]) ?  params[:direction] : 'desc'  
