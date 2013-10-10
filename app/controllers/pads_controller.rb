@@ -33,14 +33,14 @@ class PadsController < ApplicationController
           sess.delete
         end
       end
-      if @pad.group.users.include?(current_user) || @pad.group.managers.include?(current_user) || @pad.group.name == 'ungrouped'
+      if can? :read, @pad
         sess = @pad.group.ep_group.create_session(@author, 480)
         cookies[:sessionID] = {:value => sess.id}
       end
     end
 
     @has_drawer = can? :update, @pad
-    @is_public_readonly = !user_signed_in? && @pad.is_public_readonly
+    @is_public_readonly = (cannot?(:read, @pad.group) && @pad.is_public_readonly) || !user_signed_in?
   end
 
   # GET /pads/new
