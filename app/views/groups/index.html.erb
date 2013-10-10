@@ -14,13 +14,14 @@
 
   <tbody>
     <% @groups.each do |group| %>
+      <% current_ability(group) %>
       <tr>
         <td><%= link_to group.name, group %></td>
         <td><%= group.creator.name rescue '' %></td>
         <td><%= group.created_at rescue '' %></td>
         <td><%= group.updated_at rescue '' %></td>
-        <td><%= link_to t('settings_link'), edit_group_path(group) %></td>
-        <td><%= link_to t('delete_link'), group, method: :delete, data: { confirm: t('are_you_sure') } %></td>
+        <td><%= link_to(t('settings_link'), edit_group_path(group)) if can? :update, group %></td>
+        <td><%= link_to(t('delete_link'), group, method: :delete, data: { confirm: t('are_you_sure') }) if can? :destroy, group %></td>
       </tr>
     <% end %>
   </tbody>

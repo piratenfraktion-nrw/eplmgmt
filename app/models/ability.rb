@@ -22,8 +22,9 @@ class Ability
       end
     end
     unless pad.nil?
-      if pad.creator == user
+      if pad.creator == user || pad.group.managers.include?(user) || pad.group.creator == user
         can :update, Pad
+        can :destroy, Pad
       end
       if pad.creator == user || pad.group.name == 'ungrouped' || pad.group.users.include?(user) || pad.group.managers.include?(user) || pad.group.creator == user
         can :read, Pad

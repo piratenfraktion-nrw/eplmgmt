@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   before_filter :load_params, only: [:create]
-  helper_method :sort_column, :sort_direction
+  helper_method :sort_column, :sort_direction, :current_ability
   
   def load_params
     resource = controller_name.singularize.to_sym
@@ -24,7 +24,14 @@ class ApplicationController < ActionController::Base
   end
 
   private
-  def current_ability
+  def current_ability(group=nil, pad=nil)
+    if group && pad
+      @current_ability = Ability.new(current_user, group, pad)
+      return
+    elsif group
+      @current_ability = Ability.new(current_user, group)
+      return
+    end
     group = Group.find(params[:group_id]) if params[:group_id].present? rescue nil
     pad = Pad.find(params[:id]) if params[:id].present? rescue nil
     group ||= Group.find(params[:id]) unless params[:group_id].present? rescue nil

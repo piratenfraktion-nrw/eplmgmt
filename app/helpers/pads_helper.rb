@@ -7,6 +7,7 @@ module PadsHelper
   end
 
   def fetch_ep_last_edited(pad)
+    current_ability(pad.group, pad)
     begin
       _pad = Pad.find(pad.id)
       last_edit = DateTime.strptime(pad.ep_pad.last_edited.to_s, '%Q')
