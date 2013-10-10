@@ -35,7 +35,7 @@ de:
   rename_hint: "Historie wird nicht mitkopiert!"
   pad_password_hint: "Leer für keins"
   public_status_label: "Öffentlichkeitseinstellung"
-  pad_options_hint: "Pad optionen"
+  pad_options_hint: "War ein Pad einmal öffentlich beschreibbar, gibt es keinen 'nur lesen' Modus mehr!"
   name: "Name"
   creator: "Ersteller"
   created_at: "Erstellt am"

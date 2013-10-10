@@ -73,6 +73,8 @@ class Pad < ActiveRecord::Base
   end
 
   def options=(opt)
+    self.is_public = (opt != 'closed')
+    self.is_public_readonly = (opt == 'read')
     opt
   end
 

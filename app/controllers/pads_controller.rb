@@ -89,9 +89,9 @@ class PadsController < ApplicationController
       mw.edit(pad_params[:wiki_page], @pad.ep_pad.text, :summary => 'via Eplmgmt by '+current_user.name)
     end
 
-    @pad.is_public = (params[:pad][:options] != 'closed')
-    @pad.is_public_readonly = (params[:pad][:options] == 'read')
-    @pad.save
+    if params[:pad][:options] == 'write'
+      @pad.was_public_writeable = true
+    end
 
     respond_to do |format|
       if @pad.update(pad_params) || params[:pad][:delete_ep_pad] == 'true'

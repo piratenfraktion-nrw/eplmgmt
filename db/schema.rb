@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130927111732) do
+ActiveRecord::Schema.define(version: 20131010160112) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(version: 20130927111732) do
     t.string   "readonly_id"
     t.string   "wiki_page"
     t.datetime "edited_at"
+    t.boolean  "was_public_writeable"
   end
 
   add_index "pads", ["group_id"], name: "index_pads_on_group_id", using: :btree
