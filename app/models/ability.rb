@@ -26,7 +26,7 @@ class Ability
         can :update, Pad
         can :destroy, Pad
       end
-      if pad.creator == user || pad.group.name == 'ungrouped' || pad.group.users.include?(user) || pad.group.managers.include?(user) || pad.group.creator == user
+      if pad.is_public || pad.is_public_readonly || pad.creator == user || pad.group.name == 'ungrouped' || pad.group.users.include?(user) || pad.group.managers.include?(user) || pad.group.creator == user
         can :read, Pad
       end
     end

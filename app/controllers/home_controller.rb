@@ -4,23 +4,15 @@ class HomeController < ApplicationController
   def index
     @group = Group.find_or_create_by(name: 'ungrouped')
     @pad = @group.pads.build
-    fetch_pads(@group)
+    @pads = Pad.joins('LEFT JOIN users ON users.id = pads.creator_id')
+    @pads = @pads.order(sort_column + ' ' + sort_direction)
   end
 
   # GET /p
   # GET /p.json
   def pads
-    if user_signed_in? && params[:group_id].present?
-      @group = Group.find(params[:group_id])
-    else
-      @group = Group.find_or_create_by(name: 'ungrouped')
-    end
-    fetch_pads(@group)
-  end
-
-  def fetch_pads(group)
-    @pads = group.pads.joins('LEFT JOIN users ON users.id = pads.creator_id')
-    @pads = @pads.where("is_public = 't' or is_public_readonly = 't'") if current_user.nil?
+    @pads = Pad.joins('LEFT JOIN users ON users.id = pads.creator_id')
+    @pads = @pads.where("is_public = 't' or is_public_readonly = 't'") unless user_signed_in?
     @pads = @pads.order(sort_column + ' ' + sort_direction)
   end
 end

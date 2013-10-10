@@ -28,10 +28,10 @@ class Pad < ActiveRecord::Base
       self.group = group
     end
     if self.name.present?
-      ep_pad = self.group.ep_group.pad(self.name)
-      self.pad_id = ep_pad.id
-      self.edited_at = DateTime.strptime(ep_pad.last_edited.to_s, '%Q')
-      self.readonly_id = ep_pad.read_only_id
+      pad = self.group.ep_group.pad(self.name)
+      self.pad_id = pad.id
+      self.edited_at = DateTime.strptime(pad.last_edited.to_s, '%Q')
+      self.readonly_id = pad.read_only_id
       update_ep
     end
     true
@@ -46,6 +46,8 @@ class Pad < ActiveRecord::Base
     end
     pad = ep_pad
     pad.password = self.password
+    pad.public = (self.is_public || self.is_public_readonly)
+    true
   end
 
   def ep_pad
@@ -65,15 +67,12 @@ class Pad < ActiveRecord::Base
   end
 
   def options
-    return 'read' if self.is_public_readonly && ep_pad.public?
-    return 'write' if self.is_public && ep_pad.public?
-    return 'closed'
+    return 'read' if self.is_public_readonly && self.is_public
+    return 'write' if self.is_public && !self.is_public_readonly
+    return 'closed' if !self.is_public && !self.is_public_readonly
   end
 
   def options=(opt)
-    self.is_public = (opt != 'closed')
-    self.is_public_readonly = (opt == 'read')
-    ep_pad.public = self.is_public
     opt
   end
 
