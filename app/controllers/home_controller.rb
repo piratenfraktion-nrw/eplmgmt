@@ -18,7 +18,6 @@ class HomeController < ApplicationController
     fetch_pads(@group)
   end
 
-
   def fetch_pads(group)
     @pads = group.pads.joins('LEFT JOIN users ON users.id = pads.creator_id')
     @pads = @pads.where("is_public = 't' or is_public_readonly = 't'") if current_user.nil?

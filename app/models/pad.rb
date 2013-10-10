@@ -46,7 +46,6 @@ class Pad < ActiveRecord::Base
     end
     pad = ep_pad
     pad.password = self.password
-    pad.public = (self.is_public || self.is_public_readonly)
   end
 
   def ep_pad
@@ -66,14 +65,16 @@ class Pad < ActiveRecord::Base
   end
 
   def options
-    return 'read' if self.is_public_readonly
+    return 'read' if self.is_public_readonly && ep_pad.public?
     return 'write' if self.is_public && ep_pad.public?
-    'closed'
+    return 'closed'
   end
 
   def options=(opt)
     self.is_public = (opt == 'write')
     self.is_public_readonly = (opt == 'read')
+    ep_pad.public = (self.is_public || self.is_public_readonly)
+    opt
   end
 
   def pad_text
