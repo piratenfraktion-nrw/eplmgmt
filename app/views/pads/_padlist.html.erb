@@ -1,3 +1,10 @@
+<div class="row">
+<% if @pads.blank? %>
+      <div class="span6 offset3">
+        <p class="center"><%= t('no_viewable_pads') %></p>
+      </div>
+<% else %>
+<div class="span12">
 <table class="table table-condensed table-striped table-hover sortable">
   <thead>
   <tr>
@@ -31,7 +38,13 @@
   <% end %>
   </tbody>
 </table>
-
-<br>
-
-<%= link_to(t('new_pad_link'), new_group_pad_path(@group)) if can? :create, Pad %>
+</div>
+<% end %>
+</div>
+<% if can? :create, Pad %>
+<div class="row">
+<div class="span12">
+<%= link_to(t('new_pad_link'), new_group_pad_path(@group)) %>
+<% end %>
+</div>
+</div>
