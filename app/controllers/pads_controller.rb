@@ -24,7 +24,7 @@ class PadsController < ApplicationController
   # GET /p/1
   # GET /p/1.json
   def show
-    cookies[:sessionID]
+    cookies.delete :sessionID
 
     if user_signed_in?
       @author = ether.author(current_user.name, name: current_user.nickname)
@@ -38,6 +38,8 @@ class PadsController < ApplicationController
       end
     end
 
+    authorize! :show, @pad
+
     sessions = @author.sessions.select{ |s| s.group_id == @pad.group.group_id }
 
     if can? :read, @pad
@@ -46,7 +48,7 @@ class PadsController < ApplicationController
       else
         @sess = sessions.last.id
       end
-      cookies[:sessionID] = {:value => @sess}
+      cookies[:sessionID] = {:value => @sess, expires: Time.now + (3600*8)}
     end
 
     @is_public_readonly = false
