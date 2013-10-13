@@ -20,6 +20,7 @@ class ApplicationController < ActionController::Base
   end
 
   rescue_from CanCan::AccessDenied do |exception|
+    cookies.delete :sessionID
     begin
       redirect_to :back, :alert => exception.message
     rescue ActionController::RedirectBackError
