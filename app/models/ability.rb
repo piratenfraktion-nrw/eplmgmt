@@ -26,8 +26,14 @@ class Ability
         can :update, Pad
         can :destroy, Pad
       end
-      if pad.is_public || pad.is_public_readonly || pad.creator == user || pad.group.name == 'ungrouped' || pad.group.users.include?(user) || pad.group.managers.include?(user) || pad.group.creator == user
-        can :read, Pad
+      if user.id.nil?
+        if pad.is_public || pad.is_public_readonly
+          can :read, Pad
+        end
+      else
+        if pad.is_public || pad.is_public_readonly || pad.creator == user || pad.group.name == 'ungrouped' || pad.group.users.include?(user) || pad.group.managers.include?(user) || pad.group.creator == user
+          can :read, Pad
+        end
       end
     end
   end
