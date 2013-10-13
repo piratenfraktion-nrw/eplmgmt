@@ -24,6 +24,8 @@ class PadsController < ApplicationController
   # GET /p/1
   # GET /p/1.json
   def show
+    cookies[:sessionID]
+
     if user_signed_in?
       @author = ether.author(current_user.name, name: current_user.nickname)
     else
@@ -33,8 +35,6 @@ class PadsController < ApplicationController
     @author.sessions.each do |sess|
       if sess.expired? || cannot?(:read, @pad)
         sess.delete
-        cookies[:sessionID] = nil
-        cookies[:token] = nil
       end
     end
 
@@ -49,7 +49,6 @@ class PadsController < ApplicationController
       cookies[:sessionID] = {:value => @sess}
     end
 
-    @has_drawer = can? :update, @pad
     @is_public_readonly = false
     if (can?(:read, @pad) && can?(:read, @pad.group)) || can?(:update, @pad)
       @is_public_readonly = false
