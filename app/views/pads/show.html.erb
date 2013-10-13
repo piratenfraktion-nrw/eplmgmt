@@ -1,4 +1,4 @@
-<% if @has_drawer %>
+<% if can? :update, @pad %>
     <div id="pad-menu" class="modal hide fade" style="display: none;">
       <%= render 'layouts/messages' %>
       <div class="modal-header">

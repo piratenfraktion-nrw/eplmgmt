@@ -24,23 +24,37 @@ class PadsController < ApplicationController
   # GET /p/1
   # GET /p/1.json
   def show
-    cookies[:sessionID] = nil
+    cookies[:sessionID]
 
     if user_signed_in?
       @author = ether.author(current_user.name, name: current_user.nickname)
-      @author.sessions.each do |sess|
-        if sess.expired? || !@pad.group.users.include?(current_user)
-          sess.delete
-        end
-      end
-      if can? :read, @pad
-        sess = @pad.group.ep_group.create_session(@author, 480)
-        cookies[:sessionID] = {:value => sess.id}
+    else
+      @author = ether.author('guest', name: 'anonymous')
+    end
+
+    @author.sessions.each do |sess|
+      if sess.expired? || cannot?(:read, @pad)
+        sess.delete
       end
     end
 
-    @has_drawer = can? :update, @pad
-    @is_public_readonly = (cannot?(:read, @pad.group) && @pad.is_public_readonly) || !user_signed_in?
+    sessions = @author.sessions.select{ |s| s.group_id == @pad.group.group_id }
+
+    if can? :read, @pad
+      if sessions.blank?
+        @sess = @pad.group.ep_group.create_session(@author, 480).id
+      else
+        @sess = sessions.last.id
+      end
+      cookies[:sessionID] = {:value => @sess}
+    end
+
+    @is_public_readonly = false
+    if (can?(:read, @pad) && can?(:read, @pad.group)) || can?(:update, @pad)
+      @is_public_readonly = false
+    elsif can?(:read, @pad) && @pad.is_public_readonly
+      @is_public_readonly = true
+    end
   end
 
   # GET /pads/new
