@@ -18,4 +18,14 @@ namespace :etherpad do
     end
   end
 
+  desc 'remove old pads that are not in a group'
+  task remove_old_pads: :environment do
+    ether.pad_ids.each do |pid|
+      unless pid =~ /.{16}\$.+/
+        pad = ether.get_pad(pid)
+        pad.delete
+        puts "destroyed pad #{pid}"
+      end
+    end
+  end
 end
