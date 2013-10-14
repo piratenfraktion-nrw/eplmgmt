@@ -28,4 +28,13 @@ namespace :etherpad do
       end
     end
   end
+
+  desc 'remove zombie pads'
+  task remove_zombie_pads: :environment do
+    pads = Pad.where('edited_at < ?', 90.days.ago)
+    pads.each do |pad|
+      puts "killing zombie #{pad.name}"
+      pad.destroy
+    end
+  end
 end
