@@ -46,11 +46,6 @@ class Pad < ActiveRecord::Base
     pad = ep_pad
     pad.password = self.password
     pad.public = (self.is_public || self.is_public_readonly)
-    if self.options == 'closed'
-      group.ep_group.sessions.each do |s|
-        s.delete
-      end
-    end
     true
   end
 
