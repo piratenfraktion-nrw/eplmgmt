@@ -2,7 +2,7 @@
 
 Eplmgmt::Application.routes.draw do
 
-  devise_for :users, :controllers => {:registrations => "registrations", :sessions => "sessions"}
+  devise_for :users, controllers: {registrations: 'registrations'}
   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
   resources :groups do
     resources :group_users, path: :users
