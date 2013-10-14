@@ -40,7 +40,7 @@ class PadsController < ApplicationController
 
     session = @author.sessions.select{ |s| s.group_id == @pad.group.group_id }.first
 
-    if can? :read, @pad
+    if can?(:read, @pad) && user_signed_in?
       if session.nil?
         @sess = @pad.group.ep_group.create_session(@author, 480).id
       else
