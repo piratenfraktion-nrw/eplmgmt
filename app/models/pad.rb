@@ -4,7 +4,6 @@ class Pad < ActiveRecord::Base
   before_update :update_ep
   before_destroy :delete_pad
   belongs_to :group, touch: true
-  has_many :users, through: :group
   belongs_to :creator, :class_name => 'User', :foreign_key => 'creator_id'
 
   validates_presence_of :pad_id, :on => :create
