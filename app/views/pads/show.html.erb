@@ -17,3 +17,7 @@
 <% else %>
 <iframe frameborder="0" id="pad-frame" height="100%" width="100%" src="/epl/p/<%= @pad.pad_id %>"></iframe>
 <% end %>
+
+<% content_for :title do %>
+    <%= @pad.name %>
+<% end %>
