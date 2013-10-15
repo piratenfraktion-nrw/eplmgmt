@@ -54,4 +54,16 @@ namespace :etherpad do
       pad.destroy
     end
   end
+
+  desc 'cron task to fetch last pad edit date'
+  task fetch_last_edit: :environment do
+    pads = Pad.all
+    pads.each do |pad|
+      last_edit = DateTime.strptime(pad.ep_pad.last_edited.to_s, '%Q')
+      if last_edit.to_time.to_i > pad.edited_at.to_time.to_i
+        pad.edited_at = last_edit
+        pad.save
+      end
+    end
+  end
 end
