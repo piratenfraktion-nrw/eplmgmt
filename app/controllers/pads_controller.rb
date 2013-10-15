@@ -173,6 +173,6 @@ class PadsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def pad_params
-      params.require(:pad).permit(:name, :password, :options, :wiki_page, :delete_ep_pad)
+      params.require(:pad).permit(:name, :password, :options, :wiki_page, :delete_ep_pad, :creator_id)
     end
 end

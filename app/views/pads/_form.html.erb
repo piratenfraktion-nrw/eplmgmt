@@ -21,6 +21,7 @@
   </div>
 
   <% unless @pad.new_record? %>
+      <%= f.association :creator, hint: t('creator') %>
       <%
           wiki_page_hint = t('wiki_page_hint_none')
           wiki_page_hint = link_to t('wiki_page_hint'), @pad.wiki_url  unless @pad.wiki_url.nil?

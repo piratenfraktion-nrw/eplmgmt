@@ -20,7 +20,7 @@
 
           <tbody>
           <% @pads.each do |pad| %>
-              <% fetch_ep_last_edited(pad) %>
+              <% current_ability(pad.group, pad) %>
               <% if can? :read, pad %>
                   <tr>
                     <td>
