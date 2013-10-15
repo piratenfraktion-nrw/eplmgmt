@@ -19,21 +19,14 @@
           </thead>
 
           <tbody>
-          <% @pads.each do |pad| %>
-              <% current_ability(pad.group, pad) %>
-              <% if can? :read, pad %>
-                  <tr>
-                    <td>
-                      <%= link_to pad.name, '/p/'+pad.group.name+'/'+pad.name if pad.group.name != 'ungrouped' %>
-                      <%= link_to pad.name, '/p/'+pad.name if pad.group.name == 'ungrouped' %>
-                    </td>
-                    <td><%= pad.creator.nickname rescue 'unknown' %></td>
-                    <td><%= pad.created_at %></td>
-                    <td><%= pad.updated_at %></td>
-
-                    <td><%= link_to(t('settings_link'), edit_group_pad_path(pad.group, pad)) if can? :update, pad %></td>
-                    <td><%= link_to(t('delete_link'), group_pad_path(pad.group, pad), method: :delete, data: {confirm: t('are_you_sure')}) if can? :destroy, pad %></td>
-                  </tr>
+          <% cache([pads_cache_key, @pads]) do %>
+              <% @pads.each do |pad| %>
+                  <% current_ability(pad.group, pad) %>
+                  <% if can? :read, pad %>
+                      <% cache([pads_cache_key, pad]) do %>
+                          <%= render :partial => 'pads/pad_row', locals: {pad: pad} %>
+                      <% end %>
+                  <% end %>
               <% end %>
           <% end %>
           </tbody>
