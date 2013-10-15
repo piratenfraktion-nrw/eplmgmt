@@ -33,7 +33,24 @@ namespace :etherpad do
   task remove_zombie_pads: :environment do
     pads = Pad.where('edited_at < ?', 90.days.ago)
     pads.each do |pad|
-      puts "killing zombie #{pad.name}"
+      puts "killing zombie #{pad.group.name}/#{pad.name}"
+      path = File.join(File.expand_path(File.dirname(__FILE__)), '..', '..', 'zombies')
+      Dir.mkdir(path, 0700) unless Dir.exist?(path)
+      pad_file = File.join(path, "#{pad.group.name}_#{pad.name}_#{pad.group.group_id}_#{pad.id}.txt")
+      File.open(pad_file, File::RDWR|File::CREAT, 0600) { |file| file.write(pad.ep_pad.text) }
+      pad.destroy
+    end
+  end
+
+  desc 'remove orphaned pads'
+  task remove_orphaned_pads: :environment do
+    pads = Pad.where('creator_id IS NULL')
+    pads.each do |pad|
+      puts "killing orphan #{pad.group.name}/#{pad.name}"
+      path = File.join(File.expand_path(File.dirname(__FILE__)), '..', '..', 'orphans')
+      Dir.mkdir(path, 0700) unless Dir.exist?(path)
+      pad_file = File.join(path, "#{pad.group.name}_#{pad.name}_#{pad.group.group_id}_#{pad.id}.txt")
+      File.open(pad_file, File::RDWR|File::CREAT, 0600) { |file| file.write(pad.ep_pad.text) }
       pad.destroy
     end
   end

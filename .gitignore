@@ -21,6 +21,8 @@ db/*.sqlite3
 /tmp/*
 
 # various artifacts
+/zombies
+/orphans
 **.war
 *.rbc
 *.sassc
