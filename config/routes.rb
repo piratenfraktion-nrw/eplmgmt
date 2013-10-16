@@ -9,7 +9,7 @@ Eplmgmt::Application.routes.draw do
     resources :pads
   end
 
-  get '/p/:pad', to: 'pads#show', as: 'named_pad', only: [:show], format: false, id: /[\.[:digit:][:alpha:]%_-]+/
+  get '/p/:pad', to: 'pads#show', as: 'named_pad', only: [:show], format: false, pad: /[\.[:digit:][:alpha:]%_-]+/
   get '/p/:group/:pad', to: 'pads#show', as: 'named_group_pad', only: [:show], format: false, group: /[\.[:digit:][:alpha:]%_-]+/, pad: /[\.[:digit:][:alpha:]%_-]+/
   get '/p', to: 'home#pads', as: 'named_pads'
 
