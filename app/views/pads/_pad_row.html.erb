@@ -1,7 +1,13 @@
+<%
+if pad.group.name == 'ungrouped'
+  pad_title = pad.name
+else
+  pad_title = pad.group.name+'/'+pad.name
+end
+%>
 <tr>
   <td>
-    <%= link_to pad.name, '/p/'+pad.group.name+'/'+pad.name if pad.group.name != 'ungrouped' %>
-    <%= link_to pad.name, '/p/'+pad.name if pad.group.name == 'ungrouped' %>
+    <%= link_to pad_title, "/p/#{pad_title}" %>
   </td>
   <td><%= pad.creator.nickname rescue 'unknown' %></td>
   <td><%= pad.created_at %></td>
