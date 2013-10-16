@@ -9,7 +9,7 @@ class Pad < ActiveRecord::Base
   validates_presence_of :pad_id, :on => :create
   validates_presence_of :group_id, :on => :create
   validates_presence_of :name
-  validates_format_of :name, :with => /[\.[:digit:][:alpha:]%_-]+/, :message => I18n.t('is_invalid')
+  validates_format_of :name, :with => /\A[\.[:alnum:][:space:],%_-]+\z/, :message => I18n.t('is_invalid')
   validates :name, uniqueness: {scope: :group_id}
   validates_uniqueness_of :pad_id
 
@@ -33,7 +33,6 @@ class Pad < ActiveRecord::Base
       self.readonly_id = pad.read_only_id
       update_ep
     end
-    true
   end
 
   def update_ep
