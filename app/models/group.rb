@@ -13,7 +13,7 @@ class Group < ActiveRecord::Base
 
   validates_presence_of :name
   validates_uniqueness_of :name
-  validates_format_of :name, :with => /[\.[:digit:][:alpha:]%_-]+/, message: I18n.t('is_invalid')
+  validates_format_of :name, :with => /\A[\.[:alnum:][:space:],%_-]+\z/, message: I18n.t('is_invalid')
 
   def etherpad
     ep_group = ether.group(self.name)
