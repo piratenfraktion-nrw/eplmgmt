@@ -13,6 +13,9 @@ class HomeController < ApplicationController
   # GET /p
   # GET /p.json
   def pads
+    if user_signed_in?
+      @group = Group.find_or_create_by(name: 'ungrouped')
+    end
     @pads = Pad.joins('LEFT JOIN users ON users.id = pads.creator_id')
     @pads = @pads.where("is_public = 't' or is_public_readonly = 't'") unless user_signed_in?
     @pads = @pads.order(sort_column + ' ' + sort_direction)
