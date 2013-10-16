@@ -4,7 +4,7 @@ describe PadsController do
   describe "routing" do
 
     it "routes to #index" do
-      get("/pads").should route_to("pads#index")
+      get("/p").should route_to("pads#index")
     end
 
     it "routes to #new" do
