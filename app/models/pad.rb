@@ -13,6 +13,8 @@ class Pad < ActiveRecord::Base
   validates :name, uniqueness: {scope: :group_id}
   validates_uniqueness_of :pad_id
 
+  has_paper_trail
+
   def etherpad
     if self.group.nil?
       @ep_group = ether.group('ungrouped')

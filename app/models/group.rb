@@ -15,6 +15,8 @@ class Group < ActiveRecord::Base
   validates_uniqueness_of :name
   validates_format_of :name, :with => /\A[\.[:alnum:][:space:],%_-]+\z/, message: I18n.t('is_invalid')
 
+  has_paper_trail
+
   def etherpad
     ep_group = ether.group(self.name)
     self.group_id = ep_group.id

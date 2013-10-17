@@ -2,10 +2,9 @@
 
 FactoryGirl.define do
   factory :pad do
-    pad_id "MyString"
-    group nil
-    name "MyString"
-    password "MyString"
+    group_id 1
+    name 'testungrouped'
+    password ''
     creator_id 1
   end
 end

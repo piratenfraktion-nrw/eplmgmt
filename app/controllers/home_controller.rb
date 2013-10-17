@@ -5,6 +5,7 @@ class HomeController < ApplicationController
       @pad = @group.pads.build
       @pads = Pad.joins('LEFT JOIN users ON users.id = pads.creator_id')
       @pads = @pads.order(sort_column + ' ' + sort_direction).limit(10)
+      current_ability(@group, @pad)
     else
       redirect_to named_pads_path, notice: t('devise.failure.unauthenticated')
     end
