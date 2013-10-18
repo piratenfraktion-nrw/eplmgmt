@@ -11,9 +11,10 @@ class Ability
       can :groups, User
       can :create, Group
       unless group.nil?
-        if group.name == 'ungrouped' || group.users.include?(user) || group.managers.include?(user) || group.creator == user
+        if group.name == I18n.t(ENV['UNGROUPED_NAME']) || group.users.include?(user) || group.managers.include?(user) || group.creator == user
           can :read, Group
           can :create, Pad
+          can :create_pad, Group
           if group.managers.include?(user) || group.creator == user
             can :update, Group
             can :destroy, Group
@@ -31,7 +32,7 @@ class Ability
           can :read, Pad
         end
       else
-        if pad.is_public || pad.is_public_readonly || pad.creator == user || pad.group.name == 'ungrouped' || pad.group.users.include?(user) || pad.group.managers.include?(user) || pad.group.creator == user
+        if pad.is_public || pad.is_public_readonly || pad.creator == user || pad.group.name == I18n.t(ENV['UNGROUPED_NAME']) || pad.group.users.include?(user) || pad.group.managers.include?(user) || pad.group.creator == user
           can :read, Pad
         end
       end

@@ -30,6 +30,14 @@ class Group < ActiveRecord::Base
     end
   end
 
+  def name
+    if read_attribute(:name) == ENV['UNGROUPED_NAME']
+      return I18n.t(ENV['UNGROUPED_NAME'])
+    else
+      return read_attribute(:name)
+    end
+  end
+
   def ep_group
     ether.get_group(self.group_id)
   end

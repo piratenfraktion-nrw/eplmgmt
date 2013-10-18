@@ -17,12 +17,12 @@ class Pad < ActiveRecord::Base
 
   def etherpad
     if self.group.nil?
-      @ep_group = ether.group('ungrouped')
+      @ep_group = ether.group(ENV['UNGROUPED_NAME'])
       group = Group.find_by_group_id(@ep_group.id)
       if group.nil?
         group = Group.new
         group.group_id = @ep_group.id
-        group.name = 'ungrouped'
+        group.name = ENV['UNGROUPED_NAME']
         group.creator_id = self.creator_id
         group.save
       end
@@ -38,11 +38,15 @@ class Pad < ActiveRecord::Base
   end
 
   def update_ep
-    if self.name != self.name_was && !self.new_record?
-      text_was = self.ep_pad.text
-      self.ep_pad.delete
-      pad = self.group.ep_group.pad(self.name, text: text_was)
-      self.pad_id = pad.id
+    if ((self.name != self.name_was) || (self.group_id != self.group_id_was)) && !self.new_record?
+      if self.group.pads.find_by(name: self.name).blank?
+        text_was = self.ep_pad.text
+        self.ep_pad.delete
+        pad = self.group.ep_group.pad(self.name, text: text_was)
+        self.pad_id = pad.id
+      else
+        return false
+      end
     end
     pad = ep_pad
     pad.password = self.password

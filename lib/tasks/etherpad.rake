@@ -2,7 +2,7 @@ require "#{Rails.root}/lib/Etherpad"
 include Etherpad
 
 namespace :etherpad do
-  desc "Import pads without groups to the 'ungrouped' group"
+  desc "Import pads without groups to the ENV['UNGROUPED_NAME'] group"
   task import: :environment do
     ether.pad_ids.each do |pid|
       unless pid =~ /.{16}\$.+/

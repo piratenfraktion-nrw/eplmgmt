@@ -40,7 +40,7 @@ class ApplicationController < ActionController::Base
     pad = Pad.find(params[:id]) if params[:id].present? rescue nil
     group ||= Group.find(params[:id]) unless params[:group_id].present? rescue nil
     group ||= Group.find_by(name: params[:group]) if params[:group].present? rescue nil
-    group ||= Group.find_by(name: 'ungrouped') if params[:pad].present? rescue nil
+    group ||= Group.find_by(name: ENV['UNGROUPED_NAME']) if params[:pad].present? rescue nil
     pad = group.pads.find_by(name: params[:pad]) if !group.nil? && !params[:id].present? rescue nil
 
     @current_ability ||= Ability.new(current_user, group, pad)
