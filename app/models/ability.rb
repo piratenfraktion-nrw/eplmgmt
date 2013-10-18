@@ -2,6 +2,7 @@ class Ability
   include CanCan::Ability
 
   def initialize(user, group=nil, pad=nil)
+    ungrouped_name = I18n.t(ENV['UNGROUPED_NAME'])
     user ||= User.new # guest user (not logged in)
 
     if user.has_role? :admin
@@ -11,7 +12,7 @@ class Ability
       can :groups, User
       can :create, Group
       unless group.nil?
-        if group.name == I18n.t(ENV['UNGROUPED_NAME']) || group.users.include?(user) || group.managers.include?(user) || group.creator == user
+        if group.name == ungrouped_name || group.users.include?(user) || group.managers.include?(user) || group.creator == user
           can :read, Group
           can :create, Pad
           can :create_pad, Group
@@ -32,7 +33,7 @@ class Ability
           can :read, Pad
         end
       else
-        if pad.is_public || pad.is_public_readonly || pad.creator == user || pad.group.name == I18n.t(ENV['UNGROUPED_NAME']) || pad.group.users.include?(user) || pad.group.managers.include?(user) || pad.group.creator == user
+        if pad.is_public || pad.is_public_readonly || pad.creator == user || pad.group.name == ungrouped_name || pad.group.users.include?(user) || pad.group.managers.include?(user) || pad.group.creator == user
           can :read, Pad
         end
       end
