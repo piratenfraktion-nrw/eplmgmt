@@ -2,8 +2,7 @@
 
 FactoryGirl.define do
   factory :group do
-    group_id "MyString"
-    name "MyString"
+    name ENV['UNGROUPED_NAME']
     creator_id 1
   end
 end

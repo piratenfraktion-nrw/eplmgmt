@@ -13,7 +13,9 @@ class Group < ActiveRecord::Base
 
   validates_presence_of :name
   validates_uniqueness_of :name
-  validates_format_of :name, :with => /[\.[:digit:][:alpha:]%_-]+/, message: I18n.t('is_invalid')
+  validates_format_of :name, :with => /\A[\.[:alnum:][:space:],%_-]+\z/, message: I18n.t('is_invalid')
+
+  has_paper_trail
 
   def etherpad
     ep_group = ether.group(self.name)
@@ -25,6 +27,14 @@ class Group < ActiveRecord::Base
   def update_users
     self.users.each do |user|
       ep_group.create_session(ether.author(user.name), 480)
+    end
+  end
+
+  def name
+    if read_attribute(:name) == ENV['UNGROUPED_NAME']
+      return I18n.t(ENV['UNGROUPED_NAME'])
+    else
+      return read_attribute(:name)
     end
   end
 

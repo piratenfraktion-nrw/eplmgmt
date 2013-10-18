@@ -13,7 +13,7 @@ class PadsController < ApplicationController
     if user_signed_in? && params[:group_id].present?
       @group = Group.find(params[:group_id])
     else
-      @group = Group.find_or_create_by(name: 'ungrouped')
+      @group = Group.find_or_create_by(name: ENV['UNGROUPED_NAME'])
     end
 
     @pads = @group.pads.joins('LEFT JOIN users ON users.id = pads.creator_id')
@@ -51,6 +51,10 @@ class PadsController < ApplicationController
       cookies.delete :sessionID
     end
 
+    if can? :update, @pad
+      fetch_possible_groups
+    end
+
     @is_public_readonly = false
     if (can?(:read, @pad) && can?(:read, @pad.group)) || can?(:update, @pad)
       @is_public_readonly = false
@@ -69,6 +73,7 @@ class PadsController < ApplicationController
   def edit
     authorize! :update, @pad
     @group = @pad.group
+    fetch_possible_groups
   end
 
   # POST /pads
@@ -84,7 +89,7 @@ class PadsController < ApplicationController
       if @pad.save
         format.html {
           pad_url = '/p/'+@group.name+'/'+@pad.name
-          pad_url = '/p/'+@pad.name if @group.name == 'ungrouped'
+          pad_url = '/p/'+@pad.name if @group.name == ENV['UNGROUPED_NAME']
           redirect_to pad_url, notice: t('pad_created')
         }
         format.json { render action: 'show', status: :created, location: @pad }
@@ -100,6 +105,7 @@ class PadsController < ApplicationController
   def update
     authorize! :update, @pad
     @group = @pad.group
+    fetch_possible_groups
     if pad_params[:wiki_page].present?
       mw.edit(pad_params[:wiki_page], @pad.ep_pad.text, :summary => 'via Eplmgmt by '+current_user.nickname)
     end
@@ -116,7 +122,7 @@ class PadsController < ApplicationController
             redirect_to @pad.wiki_url, notice: t('pad_destroyed')
           elsif params[:pad][:delete_ep_pad] == 'true'
             @pad.destroy
-            if @pad.group.name == 'ungrouped'
+            if @pad.group.name == ENV['UNGROUPED_NAME']
               redirect_to '/p', notice: t('pad_destroyed')
             else
               redirect_to @pad.group
@@ -124,7 +130,7 @@ class PadsController < ApplicationController
           elsif pad_params[:wiki_page].present?
             redirect_to @pad.wiki_url, notice: t('pad_updated')
           else
-            if @pad.group.name == 'ungrouped'
+            if @pad.group.name == ENV['UNGROUPED_NAME']
               redirect_to named_pad_path(@pad.name), notice: t('pad_updated')
             else
               redirect_to named_group_pad_path(@pad.group.name, @pad.name), notice: t('pad_updated')
@@ -145,7 +151,7 @@ class PadsController < ApplicationController
     @pad.destroy
     respond_to do |format|
       format.html {
-        if @pad.group.name == 'ungrouped'
+        if @pad.group.name == ENV['UNGROUPED_NAME']
           redirect_to named_pads_url
         else
           redirect_to group_url(@pad.group)
@@ -156,23 +162,32 @@ class PadsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_pad
-      if params[:pad].present? && !params[:id].present?
-        if params[:group].present?
-          @group = Group.find_by(name: params[:group])
-        else
-          @group = Group.find_by(name: 'ungrouped')
-        end
-        @pad = @group.pads.where(['pads.name = ?', params[:pad]]).limit(1).first
+  # Use callbacks to share common setup or constraints between actions.
+  def set_pad
+    if params[:pad].present? && !params[:id].present?
+      if params[:group].present?
+        @group = Group.find_by(name: params[:group])
       else
-        @pad = Pad.find(params[:id])
+        @group = Group.find_by(name: ENV['UNGROUPED_NAME'])
       end
-      @group = @pad.group if @pad
+      @pad = @group.pads.where(['pads.name = ?', params[:pad]]).limit(1).first
+    else
+      @pad = Pad.find(params[:id])
     end
+    @group = @pad.group if @pad
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def pad_params
-      params.require(:pad).permit(:name, :password, :options, :wiki_page, :delete_ep_pad, :creator_id)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def pad_params
+    params.require(:pad).permit(:name, :password, :options, :wiki_page, :delete_ep_pad, :creator_id, :group_id)
+  end
+
+  def fetch_possible_groups
+    @possible_groups = Group.all.select { |g|
+      current_ability(g)
+      can? :create, Pad
+    }
+    current_ability(@pad.group, @pad)
+    return @possible_groups
+  end
 end

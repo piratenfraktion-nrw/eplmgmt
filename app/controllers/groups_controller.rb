@@ -10,7 +10,7 @@ class GroupsController < ApplicationController
     authorize! :groups, current_user
     @groups = Group
                 .joins('LEFT JOIN users ON users.id = groups.creator_id')
-                .where('groups.name != ?', 'ungrouped')
+                .where('groups.name != ?', ENV['UNGROUPED_NAME'])
                 .order(sort_column + ' ' + sort_direction)
   end
 

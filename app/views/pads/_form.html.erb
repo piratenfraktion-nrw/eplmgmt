@@ -16,11 +16,15 @@
         label: t('public_status_label'),
         hint: t('pad_options_hint'),
         as: :radio_buttons,
-        collection: options
-    %>
+        collection: options %>
   </div>
 
   <% unless @pad.new_record? %>
+      <%= f.association :group,
+                        as: :collection_select,
+                        collection: @possible_groups,
+                        label: t('group_assoc_label'),
+                        hint: t('group_assoc_hint') %>
       <%= f.association :creator, hint: t('creator') %>
       <%
           wiki_page_hint = t('wiki_page_hint_none')

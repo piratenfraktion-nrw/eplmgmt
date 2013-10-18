@@ -34,7 +34,7 @@
       </div>
   <% end %>
 </div>
-<% if can? :create, Pad %>
+<% if user_signed_in? %>
     <div class="row">
       <div class="span12">
         <%= link_to(t('new_pad_link'), new_group_pad_path(@group)) %>

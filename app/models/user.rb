@@ -5,6 +5,8 @@ class User < ActiveRecord::Base
   has_many :pads, :class_name => 'Pad', :foreign_key => 'creator_id'
   validates_presence_of :nickname
 
+  has_paper_trail
+
   rolify
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable

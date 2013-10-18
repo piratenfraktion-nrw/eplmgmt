@@ -1,5 +1,5 @@
 <%
-if pad.group.name == 'ungrouped'
+if pad.group.name == t(ENV['UNGROUPED_NAME'])
   pad_title = pad.name
 else
   pad_title = pad.group.name+'/'+pad.name
