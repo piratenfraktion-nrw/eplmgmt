@@ -78,5 +78,5 @@ en:
   group_manager_hint: "Can do everything within this group"
   pad_destroyed: "Pad destroyed!"
   group_created: "Group created"
-  group_assoc_hint: "Which group does this Pad belongs to?"
+  group_assoc_hint: "Caution: the pad link will change and the pad history will be lost!"
   group_assoc_label: "Move to group"
