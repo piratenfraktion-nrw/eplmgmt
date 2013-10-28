@@ -1,3 +1,4 @@
+require 'media_wiki'
 require 'Mediawiki'
 Mediawiki.setup do |config|
   config.api_url = ENV['MW_URL']+ENV['MW_API_PATH']
