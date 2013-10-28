@@ -103,5 +103,5 @@ de:
               taken: Schon vergeben!
               blank: Darf nicht leer sein!
   group_created: "Gruppe wurde angelegt"
-  group_assoc_hint: "Achtung: Historie geht verloren!"
+  group_assoc_hint: "Achtung: der Link zum Pad ändert sich und die Historie geht verloren!"
   group_assoc_label: "In Gruppe verschieben"
