@@ -89,7 +89,7 @@ class PadsController < ApplicationController
       if @pad.save
         format.html {
           pad_url = '/p/'+@group.name+'/'+@pad.name
-          pad_url = '/p/'+@pad.name if @group.name == ENV['UNGROUPED_NAME']
+          pad_url = '/p/'+@pad.name if @group.name == t(ENV['UNGROUPED_NAME'])
           redirect_to pad_url, notice: t('pad_created')
         }
         format.json { render action: 'show', status: :created, location: @pad }
@@ -122,7 +122,7 @@ class PadsController < ApplicationController
             redirect_to @pad.wiki_url, notice: t('pad_destroyed')
           elsif params[:pad][:delete_ep_pad] == 'true'
             @pad.destroy
-            if @pad.group.name == ENV['UNGROUPED_NAME']
+            if @pad.group.name == t(ENV['UNGROUPED_NAME'])
               redirect_to '/p', notice: t('pad_destroyed')
             else
               redirect_to @pad.group
@@ -130,7 +130,7 @@ class PadsController < ApplicationController
           elsif pad_params[:wiki_page].present?
             redirect_to @pad.wiki_url, notice: t('pad_updated')
           else
-            if @pad.group.name == ENV['UNGROUPED_NAME']
+            if @pad.group.name == t(ENV['UNGROUPED_NAME'])
               redirect_to named_pad_path(@pad.name), notice: t('pad_updated')
             else
               redirect_to named_group_pad_path(@pad.group.name, @pad.name), notice: t('pad_updated')
