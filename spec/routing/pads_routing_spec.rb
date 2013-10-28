@@ -4,11 +4,11 @@ describe PadsController do
   describe 'routing' do
 
     it 'routes to #index' do
-      get('/p').should route_to('home#index')
+      get('/p').should route_to('home#pads')
     end
 
     it 'routes to #new' do
-      get('/groups/1/pads/new').should route_to('pads#new')
+      get('/groups/1/pads/new').should route_to('pads#new', group_id: '1')
     end
 
     it 'routes to #show' do
@@ -20,19 +20,19 @@ describe PadsController do
     end
 
     it 'routes to #edit' do
-      get('/groups/1/pads/1/edit').should route_to('pads#edit', :id => '1')
+      get('/groups/1/pads/1/edit').should route_to('pads#edit', group_id: '1', :id => '1')
     end
 
     it 'routes to #create' do
-      post('/groups/1/pads').should route_to('pads#create')
+      post('/groups/1/pads').should route_to('pads#create', group_id: '1')
     end
 
     it 'routes to #update' do
-      put('/groups/1/pads').should route_to('pads#update', :id => '1')
+      put('/groups/1/pads/1').should route_to('pads#update', group_id: '1', :id => '1')
     end
 
     it 'routes to #destroy' do
-      delete('/groups/1/pads/1').should route_to('pads#destroy', :id => '1')
+      delete('/groups/1/pads/1').should route_to('pads#destroy', group_id: '1', :id => '1')
     end
 
   end
