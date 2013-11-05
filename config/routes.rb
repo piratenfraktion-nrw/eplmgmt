@@ -9,6 +9,8 @@ Eplmgmt::Application.routes.draw do
     resources :pads
   end
 
+  resources :pads
+
   get '/p/:pad',
       to: 'pads#show',
       as: 'named_pad',

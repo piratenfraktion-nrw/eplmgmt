@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   def get_ldap_email
-    self.email = Devise::LDAP::Adapter.get_ldap_param(self.name, 'mail')[0]
+    self.email = Devise::LDAP::Adapter.get_ldap_param(self.name, 'mail')[0] rescue nil
   end
 
   def get_ldap_nickname

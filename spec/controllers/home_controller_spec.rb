@@ -3,9 +3,10 @@ require 'spec_helper'
 describe HomeController do
 
   describe "GET 'index'" do
-    it 'should be successful' do
+    login_user
+    it 'should be successful if logged in' do
       get 'index'
-      response.should be_success
+      response.status.should be(200)
     end
   end
 
