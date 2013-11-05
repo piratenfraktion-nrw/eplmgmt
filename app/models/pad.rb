@@ -51,6 +51,7 @@ class Pad < ActiveRecord::Base
     pad = ep_pad
     pad.password = self.password
     pad.public = (self.is_public || self.is_public_readonly)
+    self.readonly_id = pad.read_only_id
     true
   end
 
