@@ -24,6 +24,10 @@ class PadsController < ApplicationController
   # GET /p/1
   # GET /p/1.json
   def show
+    if @pad.nil?
+      raise ActiveRecord::RecordNotFound
+    end
+
     if user_signed_in?
       @author = ether.author(current_user.name, name: current_user.nickname)
     else
