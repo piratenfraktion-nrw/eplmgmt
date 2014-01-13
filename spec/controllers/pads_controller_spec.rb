@@ -23,7 +23,7 @@ describe PadsController do
   # This should return the minimal set of attributes required to create a valid
   # Pad. As you add validations to Pad, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) { { 'pad_id' => 'MyString'} }
+  let(:valid_attributes) { { :name => 'testpad', :group_id => 1, :creator_id => 1} }
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
@@ -31,74 +31,81 @@ describe PadsController do
   let(:valid_session) { {} }
 
   describe 'GET index' do
+    login_user
     it 'assigns all pads as @pads' do
       pad = Pad.create! valid_attributes
-      get :index, {}, valid_session
+      get :index, {id: pad.to_param, group_id: pad.group.to_param}, valid_session
       assigns(:pads).should eq([pad])
     end
   end
 
   describe 'GET show' do
+    login_user
     it 'assigns the requested pad as @pad' do
       pad = Pad.create! valid_attributes
-      get :show, {:id => pad.to_param}, valid_session
+      get :show, {:id => pad.to_param, :group_id => pad.group.to_param}, valid_session
       assigns(:pad).should eq(pad)
     end
   end
 
   describe 'GET new' do
+    login_user
     it 'assigns a new pad as @pad' do
-      get :new, {}, valid_session
+      get :new, {group_id: '1'}, valid_session
       assigns(:pad).should be_a_new(Pad)
     end
   end
 
   describe 'GET edit' do
+    login_user
     it 'assigns the requested pad as @pad' do
       pad = Pad.create! valid_attributes
-      get :edit, {:id => pad.to_param}, valid_session
+      get :edit, {:id => pad.to_param, :group_id => pad.group.to_param}, valid_session
       assigns(:pad).should eq(pad)
     end
   end
 
   describe 'POST create' do
     describe 'with valid params' do
+      login_user
       it 'creates a new Pad' do
         expect {
-          post :create, {:pad => valid_attributes}, valid_session
+          post :create, {:pad => valid_attributes, :group_id => '1'}, valid_session
         }.to change(Pad, :count).by(1)
       end
 
       it 'assigns a newly created pad as @pad' do
-        post :create, {:pad => valid_attributes}, valid_session
+        post :create, {:pad => valid_attributes, :group_id => '1'}, valid_session
         assigns(:pad).should be_a(Pad)
         assigns(:pad).should be_persisted
       end
 
       it 'redirects to the created pad' do
-        post :create, {:pad => valid_attributes}, valid_session
+        post :create, {:pad => valid_attributes, :group_id => '1'}, valid_session
         response.should redirect_to(Pad.last)
       end
     end
 
     describe 'with invalid params' do
+      login_user
       it 'assigns a newly created but unsaved pad as @pad' do
         # Trigger the behavior that occurs when invalid params are submitted
         Pad.any_instance.stub(:save).and_return(false)
-        post :create, {:pad => { 'pad_id' => 'invalid value'}}, valid_session
+        post :create, {:pad => { 'name' => 'invalid/ value'}, :group_id => '1'}, valid_session
         assigns(:pad).should be_a_new(Pad)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         Pad.any_instance.stub(:save).and_return(false)
-        post :create, {:pad => { 'pad_id' => 'invalid value'}}, valid_session
+        post :create, {:pad => { 'name' => 'invalid /value'}, :group_id => '1'}, valid_session
         response.should render_template('new')
       end
     end
   end
 
   describe 'PUT update' do
+    login_user
     describe 'with valid params' do
       it 'updates the requested pad' do
         pad = Pad.create! valid_attributes
@@ -106,19 +113,19 @@ describe PadsController do
         # specifies that the Pad created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        Pad.any_instance.should_receive(:update).with({ 'pad_id' => 'MyString'})
-        put :update, {:id => pad.to_param, :pad => { 'pad_id' => 'MyString'}}, valid_session
+        Pad.any_instance.should_receive(:update).with({ 'name' => 'testpad'})
+        put :update, {:id => pad.to_param, :group_id => pad.group_id, :pad => { 'name' => 'testpad'}}, valid_session
       end
 
       it 'assigns the requested pad as @pad' do
         pad = Pad.create! valid_attributes
-        put :update, {:id => pad.to_param, :pad => valid_attributes}, valid_session
+        put :update, {:id => pad.to_param, :group_id => pad.group_id, :pad => valid_attributes}, valid_session
         assigns(:pad).should eq(pad)
       end
 
       it 'redirects to the pad' do
         pad = Pad.create! valid_attributes
-        put :update, {:id => pad.to_param, :pad => valid_attributes}, valid_session
+        put :update, {:id => pad.to_param, :group_id => pad.group_id, :pad => valid_attributes}, valid_session
         response.should redirect_to(pad)
       end
     end
@@ -128,7 +135,7 @@ describe PadsController do
         pad = Pad.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         Pad.any_instance.stub(:save).and_return(false)
-        put :update, {:id => pad.to_param, :pad => { 'pad_id' => 'invalid value'}}, valid_session
+        put :update, {:id => pad.to_param, :group_id => pad.group_id, :pad => { 'name' => 'invalid/ value'}}, valid_session
         assigns(:pad).should eq(pad)
       end
 
@@ -136,24 +143,25 @@ describe PadsController do
         pad = Pad.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         Pad.any_instance.stub(:save).and_return(false)
-        put :update, {:id => pad.to_param, :pad => { 'pad_id' => 'invalid value'}}, valid_session
+        put :update, {:id => pad.to_param, :group_id => pad.group_id, :pad => { 'name' => 'invalid /value'}}, valid_session
         response.should render_template('edit')
       end
     end
   end
 
   describe 'DELETE destroy' do
+    login_user
     it 'destroys the requested pad' do
       pad = Pad.create! valid_attributes
       expect {
-        delete :destroy, {:id => pad.to_param}, valid_session
+        delete :destroy, {:id => pad.to_param, :group_id => pad.group_id}, valid_session
       }.to change(Pad, :count).by(-1)
     end
 
     it 'redirects to the pads list' do
       pad = Pad.create! valid_attributes
-      delete :destroy, {:id => pad.to_param}, valid_session
-      response.should redirect_to(pads_url)
+      delete :destroy, {:id => pad.to_param, :group_id => pad.group_id}, valid_session
+      response.should redirect_to(named_pads_url)
     end
   end
 

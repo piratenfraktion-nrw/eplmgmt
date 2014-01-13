@@ -23,12 +23,12 @@ describe GroupsController do
   # This should return the minimal set of attributes required to create a valid
   # Group. As you add validations to Group, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) { { 'group_id' => 'MyString'} }
+  let(:valid_attributes) { { :name => 'testgroup', :creator_id => 1, :group_id => 'd.ksjdfsfdkjkjkjk'} }
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # GroupsController. Be sure to keep this updated too.
-  let(:valid_session) { {} }
+  let(:valid_session) { { 'warden.user.user.key' => session['warden.user.user.key'] } }
 
   describe 'GET index' do
     it 'assigns all groups as @groups' do
@@ -39,6 +39,7 @@ describe GroupsController do
   end
 
   describe 'GET show' do
+    login_user
     it 'assigns the requested group as @group' do
       group = Group.create! valid_attributes
       get :show, {:id => group.to_param}, valid_session
@@ -47,6 +48,7 @@ describe GroupsController do
   end
 
   describe 'GET new' do
+    login_user
     it 'assigns a new group as @group' do
       get :new, {}, valid_session
       assigns(:group).should be_a_new(Group)
@@ -54,6 +56,7 @@ describe GroupsController do
   end
 
   describe 'GET edit' do
+    login_user
     it 'assigns the requested group as @group' do
       group = Group.create! valid_attributes
       get :edit, {:id => group.to_param}, valid_session
@@ -62,6 +65,7 @@ describe GroupsController do
   end
 
   describe 'POST create' do
+    login_user
     describe 'with valid params' do
       it 'creates a new Group' do
         expect {
@@ -99,6 +103,7 @@ describe GroupsController do
   end
 
   describe 'PUT update' do
+    login_user
     describe 'with valid params' do
       it 'updates the requested group' do
         group = Group.create! valid_attributes
@@ -119,6 +124,7 @@ describe GroupsController do
       it 'redirects to the group' do
         group = Group.create! valid_attributes
         put :update, {:id => group.to_param, :group => valid_attributes}, valid_session
+        puts response
         response.should redirect_to(group)
       end
     end
@@ -143,6 +149,7 @@ describe GroupsController do
   end
 
   describe 'DELETE destroy' do
+    login_user
     it 'destroys the requested group' do
       group = Group.create! valid_attributes
       expect {
