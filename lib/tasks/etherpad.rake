@@ -55,6 +55,18 @@ namespace :etherpad do
     end
   end
 
+  desc 'backup pads by creator'
+  task :backup_pads_by_user, [:username] => :environment do |task, args|
+    pads = Pad.where('creator_id IS ?', User.find_by(name: args.username))
+    pads.each do |pad|
+      puts "Backing up #{pad.group.name}/#{pad.name}"
+      path = File.join(File.expand_path(File.dirname(__FILE__)), '..', '..', args.username)
+      Dir.mkdir(path, 0700) unless Dir.exist?(path)
+      pad_file = File.join(path, "#{pad.group.name}_#{pad.name}_#{pad.group.group_id}_#{pad.id}.txt")
+      File.open(pad_file, File::RDWR|File::CREAT, 0600) { |file| file.write(pad.ep_pad.text) }
+    end
+  end
+
   desc 'cron task to fetch last pad edit date'
   task fetch_last_edit: :environment do
     pads = Pad.all
