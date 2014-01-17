@@ -56,8 +56,9 @@ namespace :etherpad do
   end
 
   desc 'backup pads by creator'
-  task :backup_pads_by_user, [:username] => :environment do |task, args|
-    pads = Pad.where('creator_id IS ?', User.find_by(name: args.username).id)
+  task :backup_pads_by_creator, [:username] => :environment do |task, args|
+    puts "Backing up for User: #{args.username}"
+    pads = Pad.where(creator_id: User.find_by(name: args.username).id)
     pads.each do |pad|
       puts "Backing up #{pad.group.name}/#{pad.name}"
       path = File.join(File.expand_path(File.dirname(__FILE__)), '..', '..', args.username)
