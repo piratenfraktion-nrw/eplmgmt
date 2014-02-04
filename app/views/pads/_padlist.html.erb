@@ -20,7 +20,7 @@
 
           <tbody>
           <% cache([pads_cache_key, Digest::MD5.hexdigest(@pads.map(&:cache_key).to_s)]) do %>
-              <% @pads.find_each do |pad| %>
+              <% @pads.each do |pad| %>
                   <% current_ability(pad.group, pad) %>
                   <% if can? :read, pad %>
                       <% cache([pads_cache_key, pad]) do %>
