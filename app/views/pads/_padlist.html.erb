@@ -1,5 +1,5 @@
 <div class="row">
-  <% if @pads.blank? %>
+  <% if !@pads.nil? && @pads.blank? %>
       <div class="span6 offset3">
         <p class="center"><%= t('no_viewable_pads') %></p>
       </div>

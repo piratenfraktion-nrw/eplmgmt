@@ -16,6 +16,28 @@ class Pad < ActiveRecord::Base
 
   has_paper_trail
 
+  def self.skip_time_zone_conversion_for_attributes
+    [
+      'users.id'.to_sym,
+      'users.password'.to_sym,
+      'users.encrypted_password'.to_sym,
+      'users.reset_password_token'.to_sym,
+      'users.reset_password_sent_at'.to_sym,
+      'users.remember_created_at'.to_sym,
+      'users.remember_token'.to_sym,
+      'users.nickname'.to_sym,
+      'users.created_at'.to_sym,
+      'users.updated_at'.to_sym,
+      'users.name'.to_sym,
+      'users.sign_in_count'.to_sym,
+      'users.current_sign_in_at'.to_sym,
+      'users.current_sign_in_ip'.to_sym,
+      'users.last_sign_in_ip'.to_sym,
+      'users.last_sign_in_at'.to_sym,
+      'users.email'.to_sym
+    ]
+  end
+
   def etherpad
     if self.group.nil?
       @ep_group = ether.group(ENV['UNGROUPED_NAME'])
@@ -79,6 +101,8 @@ class Pad < ActiveRecord::Base
   end
 
   def options=(opt)
+    attribute_will_change!('is_public')
+    attribute_will_change!('is_public_readonly')
     self.is_public = (opt != 'closed')
     self.is_public_readonly = (opt == 'read')
     opt
@@ -89,7 +113,12 @@ class Pad < ActiveRecord::Base
   end
 
   def pad_text=(text)
+    attribute_will_change!('pad_text') if ep_pad.text != value
     ep_pad.text = text
+  end
+
+  def pad_text_changed?
+    changed.include?('pad_text')
   end
 
   def wiki_url
