@@ -56,6 +56,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.7.0)
+    dalli (2.7.0)
     database_cleaner (1.0.1)
     debug_inspector (0.0.2)
     devise (3.2.2)
@@ -276,6 +277,7 @@ DEPENDENCIES
   cancan
   capybara
   coffee-rails (~> 4.0.0)
+  dalli
   database_cleaner (= 1.0.1)
   devise
   devise_ldap_authenticatable

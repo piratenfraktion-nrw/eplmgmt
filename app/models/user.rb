@@ -22,4 +22,8 @@ class User < ActiveRecord::Base
     nick = 'anonymous' if nick.length < 2
     self.nickname = nick
   end
+
+  def self.skip_time_zone_conversion_for_attributes
+    []
+  end
 end
