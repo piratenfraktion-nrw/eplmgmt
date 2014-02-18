@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131017081842) do
+ActiveRecord::Schema.define(version: 20140218121301) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,7 +40,7 @@ ActiveRecord::Schema.define(version: 20131017081842) do
   create_table "pads", force: true do |t|
     t.string   "pad_id"
     t.integer  "group_id"
-    t.string   "name"
+    t.string   "name",                 limit: 50
     t.string   "password"
     t.integer  "creator_id"
     t.datetime "created_at"

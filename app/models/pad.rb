@@ -9,6 +9,7 @@ class Pad < ActiveRecord::Base
   validates_presence_of :pad_id, :on => :create
   validates_presence_of :group_id, :on => :create
   validates_presence_of :name
+  validates :name, length: { in: 2..50 }
   validates_format_of :name, :with => /\A[\.[:alnum:][:space:],%_-]+\z/, :message => I18n.t('is_invalid')
   validates :name, uniqueness: {scope: :group_id}
   validates_uniqueness_of :pad_id
@@ -28,7 +29,7 @@ class Pad < ActiveRecord::Base
       end
       self.group = group
     end
-    if self.name.present?
+    if self.name.present? && self.name.length <= 50
       pad = self.group.ep_group.pad(self.name)
       self.pad_id = pad.id
       self.edited_at = DateTime.strptime(pad.last_edited.to_s, '%Q')
