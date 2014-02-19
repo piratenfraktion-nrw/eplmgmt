@@ -72,10 +72,14 @@ namespace :etherpad do
   task fetch_last_edit: :environment do
     pads = Pad.all
     pads.find_each do |pad|
-      last_edit = DateTime.strptime(pad.ep_pad.last_edited.to_s, '%Q')
-      if last_edit.to_time.to_i > pad.edited_at.to_time.to_i
-        pad.edited_at = last_edit
-        pad.save
+      begin
+        last_edit = DateTime.strptime(pad.ep_pad.last_edited.to_s, '%Q')
+        if last_edit.to_time.to_i > pad.edited_at.to_time.to_i
+          pad.edited_at = last_edit
+          pad.save
+        end
+      rescue
+        puts "Exception for pad #{pad.id} #{pad.name}"
       end
     end
   end
